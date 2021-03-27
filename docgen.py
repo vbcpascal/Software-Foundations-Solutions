@@ -3,17 +3,29 @@ import os
 from typing import *
 
 modules = [
+    'Preface',
     'Basics',
     'Induction',
     'Lists',
+    'Poly',
 ]
 
+COQC = 'coqc'
 COQDOC = 'coqdoc'
 HEADER = 'common/html/header.html'
 FOOTER = 'common/html/footer.html'
 
-CBCODE = '(** #</div><div class="solution"><div># *)'
-CECODE = '(** #</div></div><div class="doc"># *)'
+REPLACER = {
+    '(*CB*)': '(** #</div><div class="solution"><div># *)',
+    '(*CE*)': '(** #</div></div><div class="doc"># *)',
+    '(*CBL*)': '(** #</div><div class="solution-lemma"><div># *)',
+    '(*CEL*)': '(** #</div></div><div class="doc"># *)',
+}
+
+
+def build_module(module_name: str):
+    cmd = COQC + ' -Q . LF ' + module_name + '.v'
+    os.system(cmd)
 
 
 def gen_doc(module_name: str):
@@ -23,8 +35,8 @@ def gen_doc(module_name: str):
         coq_code = f.read()
 
     # replace cb and ce
-    coq_code = coq_code.replace("(*CB*)", CBCODE)
-    coq_code = coq_code.replace("(*CE*)", CECODE)
+    for key in REPLACER:
+        coq_code = coq_code.replace(key, REPLACER[key])
 
     # dump a temp file
     tmp_file = 'tmp_' + module_name + '.v'
@@ -45,5 +57,13 @@ def gen_doc(module_name: str):
 
 
 if __name__ == '__main__':
-    for module in modules:
-        gen_doc(module)
+    options = sys.argv[1:]
+    do_all = 'all' in options
+
+    if 'build' in options or do_all:
+        for module in modules:
+            build_module(module)
+
+    if 'doc' in options or do_all:
+        for module in modules:
+            gen_doc(module)
