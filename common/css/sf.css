@@ -71,12 +71,12 @@ ul#menu a.hover li {
     font-size: 100%;
     line-height: 100%;
     max-width: 760px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.6);
     margin: 0 auto;
 }
 
 #main_home {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 #index_content div.intro p {
@@ -798,13 +798,85 @@ ul.doclist {
     min-height: 340px;
 }
 
+.index_button_column {
+    float: left;
+    width: 30%;
+    margin: 0 10px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 25px;
+    padding-bottom: 20px;
+}
+
+.index_button {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.index_button :link {
+    float: left;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: .4rem;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.index_button :visited {
+    float: left;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: .4rem;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.index_button :hover {
+    float: left;
+    background-color: rgba(0, 0, 0, 0.07);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: .4rem;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.index_button :active {
+    float: left;
+    background-color: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: .4rem;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.content_text {
+    padding-right: 10px;
+    padding-bottom: 20px;
+    font-size: 20px;
+    line-height: 33px;
+}
+
+.content_text .mcomment {
+    font-size: 17px;
+    font-style: italic;
+}
+
+.content_text .mtitle {
+    font-size: 23px;
+}
+
 .smallauthors {
-    font-size: 19px;
+    font-size: 17px;
     line-height: 25px;
 }
 
 .mediumauthors {
-    font-size: 23px;
+    font-size: 21px;
     line-height: 33px;
 }
 
