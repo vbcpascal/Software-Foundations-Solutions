@@ -5,7 +5,7 @@
   border: 1px solid #1890ff;
   border-radius: .4rem;
   font-size: smaller;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .solution-lemma {
@@ -14,7 +14,7 @@
   border: 1px solid #52c41a;
   border-radius: .4rem;
   font-size: smaller;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .warning {
