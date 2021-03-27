@@ -62,6 +62,8 @@ def gen_doc(module_name: str):
     htmlfile = module_name + '.html'
     with open(htmlfile, 'r') as f:
         content = f.read()
+    content = content.replace('RP_TITLE_RP', module_name)
+
     b_index = content.find('<h1 class="libtitle">') + 21
     e_index = content.find('</h1>', b_index)
     title_str = content[b_index: e_index]
@@ -71,8 +73,9 @@ def gen_doc(module_name: str):
         sub_title = title_str[c_index + 2:]
         content = content.replace(
             title_str, main_title + '<span class="subtitle">' + sub_title)
-        with open(htmlfile, 'w+') as f:
-            f.write(content)
+
+    with open(htmlfile, 'w+') as f:
+        f.write(content)
 
 
 if __name__ == '__main__':
