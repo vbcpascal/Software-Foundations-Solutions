@@ -5,11 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="common/css/sf.css" rel="stylesheet" type="text/css" />
     <link href="common/css/alert.css" rel="stylesheet" type="text/css" />
-    <title> SF Solution </title>
     <link href="common/jquery-ui/jquery-ui.css" rel="stylesheet">
     <script src="common/jquery-ui/external/jquery/jquery.js"></script>
     <script src="common/jquery-ui/jquery-ui.js"></script>
     <script src="common/toggleproofs.js"></script>
+    <script src="common/coqdocjs.js"></script>
     <link href="common/css/lf.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -27,14 +27,12 @@
     </div>
 
     <div id="main">
-        <h1 class="libtitle">Basics<span class="subtitle">Functional Programming in Coq</span></h1>
-<h1 class="libtitle">Library tmp_Poly</h1>
+<h1 class="libtitle">Poly<span class="subtitle">Polymorphism and Higher-Order Functions</h1>
 
 <div class="code">
 </div>
 
 <div class="doc">
-<a name="lab1"></a><h1 class="section">Poly: Polymorphism and Higher-Order Functions</h1>
 
 </div>
 <div class="code">
@@ -49,7 +47,7 @@
 </div>
 
 <div class="doc">
-<a name="lab2"></a><h1 class="section">Polymorphism</h1>
+<a name="lab1"></a><h1 class="section">Polymorphism</h1>
 
 <div class="paragraph"> </div>
 
@@ -65,7 +63,7 @@
 </div>
 
 <div class="doc">
-<a name="lab3"></a><h2 class="section">Polymorphic Lists</h2>
+<a name="lab2"></a><h2 class="section">Polymorphic Lists</h2>
 
 <div class="paragraph"> </div>
 
@@ -262,7 +260,7 @@ To use <span class="inlinecode"><span class="id" title="tactic">repeat</span></s
 </div>
 
 <div class="doc">
-<a name="lab4"></a><h4 class="section">Exercise: 2 stars, standard (mumble_grumble)</h4>
+<a name="lab3"></a><h4 class="section">Exercise: 2 stars, standard (mumble_grumble)</h4>
 
 
 <div class="paragraph"> </div>
@@ -331,7 +329,7 @@ Which of the following are well-typed elements of <span class="inlinecode"><span
 </div>
 
 <div class="doc">
-<a name="lab5"></a><h3 class="section">Type Annotation Inference</h3>
+<a name="lab4"></a><h3 class="section">Type Annotation Inference</h3>
 
 <div class="paragraph"> </div>
 
@@ -386,7 +384,7 @@ It has exactly the same type as <span class="inlinecode"><span class="id" title=
 </div>
 
 <div class="doc">
-<a name="lab6"></a><h3 class="section">Type Argument Synthesis</h3>
+<a name="lab5"></a><h3 class="section">Type Argument Synthesis</h3>
 
 <div class="paragraph"> </div>
 
@@ -476,7 +474,7 @@ In this instance, we don't save much by writing <span class="inlinecode"><span c
 </div>
 
 <div class="doc">
-<a name="lab7"></a><h3 class="section">Implicit Arguments</h3>
+<a name="lab6"></a><h3 class="section">Implicit Arguments</h3>
 
 <div class="paragraph"> </div>
 
@@ -609,7 +607,7 @@ Because <span class="inlinecode"><span class="id" title="var">X</span></span> is
 </div>
 
 <div class="doc">
-<a name="lab8"></a><h3 class="section">Supplying Type Arguments Explicitly</h3>
+<a name="lab7"></a><h3 class="section">Supplying Type Arguments Explicitly</h3>
 
 <div class="paragraph"> </div>
 
@@ -695,11 +693,11 @@ Now lists can be written just the way we'd hope:
 </div>
 
 <div class="doc">
-<a name="lab9"></a><h3 class="section">Exercises</h3>
+<a name="lab8"></a><h3 class="section">Exercises</h3>
 
 <div class="paragraph"> </div>
 
-<a name="lab10"></a><h4 class="section">Exercise: 2 stars, standard, optional (poly_exercises)</h4>
+<a name="lab9"></a><h4 class="section">Exercise: 2 stars, standard, optional (poly_exercises)</h4>
 
 
 <div class="paragraph"> </div>
@@ -777,7 +775,7 @@ Now lists can be written just the way we'd hope:
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab11"></a><h4 class="section">Exercise: 2 stars, standard, optional (more_poly_exercises)</h4>
+<a name="lab10"></a><h4 class="section">Exercise: 2 stars, standard, optional (more_poly_exercises)</h4>
 
 
 <div class="paragraph"> </div>
@@ -841,7 +839,7 @@ Now lists can be written just the way we'd hope:
 </div>
 
 <div class="doc">
-<a name="lab12"></a><h2 class="section">Polymorphic Pairs</h2>
+<a name="lab11"></a><h2 class="section">Polymorphic Pairs</h2>
 
 <div class="paragraph"> </div>
 
@@ -939,7 +937,7 @@ The following function takes two lists and combines them
 </div>
 
 <div class="doc">
-<a name="lab13"></a><h4 class="section">Exercise: 1 star, standard, optional (combine_checks)</h4>
+<a name="lab12"></a><h4 class="section">Exercise: 1 star, standard, optional (combine_checks)</h4>
 
 
 <div class="paragraph"> </div>
@@ -983,7 +981,7 @@ The following function takes two lists and combines them
 </div>
 
 <div class="doc">
-<a name="lab14"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (split)</h4>
+<a name="lab13"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (split)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1042,7 +1040,7 @@ The following function takes two lists and combines them
 </div>
 
 <div class="doc">
-<a name="lab15"></a><h2 class="section">Polymorphic Options</h2>
+<a name="lab14"></a><h2 class="section">Polymorphic Options</h2>
 
 <div class="paragraph"> </div>
 
@@ -1101,7 +1099,7 @@ We can now rewrite the <span class="inlinecode"><span class="id" title="var">nth
 </div>
 
 <div class="doc">
-<a name="lab16"></a><h4 class="section">Exercise: 1 star, standard, optional (hd_error_poly)</h4>
+<a name="lab15"></a><h4 class="section">Exercise: 1 star, standard, optional (hd_error_poly)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1170,7 +1168,7 @@ We can now rewrite the <span class="inlinecode"><span class="id" title="var">nth
 </div>
 
 <div class="doc">
-<a name="lab17"></a><h1 class="section">Functions as Data</h1>
+<a name="lab16"></a><h1 class="section">Functions as Data</h1>
 
 <div class="paragraph"> </div>
 
@@ -1186,7 +1184,7 @@ We can now rewrite the <span class="inlinecode"><span class="id" title="var">nth
 </div>
 
 <div class="doc">
-<a name="lab18"></a><h2 class="section">Higher-Order Functions</h2>
+<a name="lab17"></a><h2 class="section">Higher-Order Functions</h2>
 
 <div class="paragraph"> </div>
 
@@ -1224,7 +1222,7 @@ The argument <span class="inlinecode"><span class="id" title="var">f</span></spa
 </div>
 
 <div class="doc">
-<a name="lab19"></a><h2 class="section">Filter</h2>
+<a name="lab18"></a><h2 class="section">Filter</h2>
 
 <div class="paragraph"> </div>
 
@@ -1294,7 +1292,7 @@ We can use <span class="inlinecode"><span class="id" title="var">filter</span></
 </div>
 
 <div class="doc">
-<a name="lab20"></a><h2 class="section">Anonymous Functions</h2>
+<a name="lab19"></a><h2 class="section">Anonymous Functions</h2>
 
 <div class="paragraph"> </div>
 
@@ -1344,7 +1342,7 @@ The expression <span class="inlinecode">(<span class="id" title="keyword">fun</s
 </div>
 
 <div class="doc">
-<a name="lab21"></a><h4 class="section">Exercise: 2 stars, standard (filter_even_gt7)</h4>
+<a name="lab20"></a><h4 class="section">Exercise: 2 stars, standard (filter_even_gt7)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1406,7 +1404,7 @@ The expression <span class="inlinecode">(<span class="id" title="keyword">fun</s
  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab22"></a><h4 class="section">Exercise: 3 stars, standard (partition)</h4>
+<a name="lab21"></a><h4 class="section">Exercise: 3 stars, standard (partition)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1485,7 +1483,7 @@ The expression <span class="inlinecode">(<span class="id" title="keyword">fun</s
 </div>
 
 <div class="doc">
-<a name="lab23"></a><h2 class="section">Map</h2>
+<a name="lab22"></a><h2 class="section">Map</h2>
 
 <div class="paragraph"> </div>
 
@@ -1550,11 +1548,11 @@ It can even be applied to a list of numbers and
 </div>
 
 <div class="doc">
-<a name="lab24"></a><h3 class="section">Exercises</h3>
+<a name="lab23"></a><h3 class="section">Exercises</h3>
 
 <div class="paragraph"> </div>
 
-<a name="lab25"></a><h4 class="section">Exercise: 3 stars, standard (map_rev)</h4>
+<a name="lab24"></a><h4 class="section">Exercise: 3 stars, standard (map_rev)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1608,7 +1606,7 @@ It can even be applied to a list of numbers and
  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab26"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (flat_map)</h4>
+<a name="lab25"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (flat_map)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1683,7 +1681,7 @@ It can even be applied to a list of numbers and
 </div>
 
 <div class="doc">
-<a name="lab27"></a><h4 class="section">Exercise: 2 stars, standard, optional (implicit_args)</h4>
+<a name="lab26"></a><h4 class="section">Exercise: 2 stars, standard, optional (implicit_args)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1703,7 +1701,7 @@ It can even be applied to a list of numbers and
 </div>
 
 <div class="doc">
-<a name="lab28"></a><h2 class="section">Fold</h2>
+<a name="lab27"></a><h2 class="section">Fold</h2>
 
 <div class="paragraph"> </div>
 
@@ -1773,7 +1771,7 @@ Intuitively, the behavior of the <span class="inlinecode"><span class="id" title
 </div>
 
 <div class="doc">
-<a name="lab29"></a><h4 class="section">Exercise: 1 star, advanced (fold_types_different)</h4>
+<a name="lab28"></a><h4 class="section">Exercise: 1 star, advanced (fold_types_different)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1808,7 +1806,7 @@ is not O, where f has type nat-&gt;bool-&gt;bool.
 </div>
 
 <div class="doc">
-<a name="lab30"></a><h2 class="section">Functions That Construct Functions</h2>
+<a name="lab29"></a><h2 class="section">Functions That Construct Functions</h2>
 
 <div class="paragraph"> </div>
 
@@ -1881,7 +1879,7 @@ Each <span class="inlinecode">-&gt;</span> in this expression is actually a <i>b
 </div>
 
 <div class="doc">
-<a name="lab31"></a><h1 class="section">Additional Exercises</h1>
+<a name="lab30"></a><h1 class="section">Additional Exercises</h1>
 
 </div>
 <div class="code">
@@ -1893,7 +1891,7 @@ Each <span class="inlinecode">-&gt;</span> in this expression is actually a <i>b
 </div>
 
 <div class="doc">
-<a name="lab32"></a><h4 class="section">Exercise: 2 stars, standard (fold_length)</h4>
+<a name="lab31"></a><h4 class="section">Exercise: 2 stars, standard (fold_length)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1945,7 +1943,7 @@ Prove the correctness of <span class="inlinecode"><span class="id" title="var">f
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab33"></a><h4 class="section">Exercise: 3 stars, standard (fold_map)</h4>
+<a name="lab32"></a><h4 class="section">Exercise: 3 stars, standard (fold_map)</h4>
 
 
 <div class="paragraph"> </div>
@@ -2003,7 +2001,7 @@ Prove the correctness of <span class="inlinecode"><span class="id" title="var">f
 <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab34"></a><h4 class="section">Exercise: 2 stars, advanced (currying)</h4>
+<a name="lab33"></a><h4 class="section">Exercise: 2 stars, advanced (currying)</h4>
 
 
 <div class="paragraph"> </div>
@@ -2121,7 +2119,7 @@ Thought exercise: before running the following commands, can you
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab35"></a><h4 class="section">Exercise: 2 stars, advanced (nth_error_informal)</h4>
+<a name="lab34"></a><h4 class="section">Exercise: 2 stars, advanced (nth_error_informal)</h4>
 
 
 <div class="paragraph"> </div>
@@ -2229,7 +2227,7 @@ Complete the definitions of the following functions. Make sure
     <span class="inlinecode"><span class="id" title="tactic">reflexivity</span></span>. 
 <div class="paragraph"> </div>
 
-<a name="lab36"></a><h4 class="section">Exercise: 1 star, advanced (church_succ)</h4>
+<a name="lab35"></a><h4 class="section">Exercise: 1 star, advanced (church_succ)</h4>
 
 <div class="paragraph"> </div>
 
@@ -2300,7 +2298,7 @@ Complete the definitions of the following functions. Make sure
  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab37"></a><h4 class="section">Exercise: 1 star, advanced (church_plus)</h4>
+<a name="lab36"></a><h4 class="section">Exercise: 1 star, advanced (church_plus)</h4>
 
 <div class="paragraph"> </div>
 
@@ -2370,7 +2368,7 @@ Complete the definitions of the following functions. Make sure
  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab38"></a><h4 class="section">Exercise: 2 stars, advanced (church_mult)</h4>
+<a name="lab37"></a><h4 class="section">Exercise: 2 stars, advanced (church_mult)</h4>
 
 <div class="paragraph"> </div>
 
@@ -2439,7 +2437,7 @@ Complete the definitions of the following functions. Make sure
  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab39"></a><h4 class="section">Exercise: 2 stars, advanced (church_exp)</h4>
+<a name="lab38"></a><h4 class="section">Exercise: 2 stars, advanced (church_exp)</h4>
 
 <div class="paragraph"> </div>
 
@@ -2529,6 +2527,5 @@ Complete the definitions of the following functions. Make sure
 </div>
 
 </div>
-</body>
 
 </html>

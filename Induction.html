@@ -5,11 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="common/css/sf.css" rel="stylesheet" type="text/css" />
     <link href="common/css/alert.css" rel="stylesheet" type="text/css" />
-    <title> SF Solution </title>
     <link href="common/jquery-ui/jquery-ui.css" rel="stylesheet">
     <script src="common/jquery-ui/external/jquery/jquery.js"></script>
     <script src="common/jquery-ui/jquery-ui.js"></script>
     <script src="common/toggleproofs.js"></script>
+    <script src="common/coqdocjs.js"></script>
     <link href="common/css/lf.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -27,14 +27,12 @@
     </div>
 
     <div id="main">
-        <h1 class="libtitle">Basics<span class="subtitle">Functional Programming in Coq</span></h1>
-<h1 class="libtitle">Library tmp_Induction</h1>
+<h1 class="libtitle">Induction<span class="subtitle">Proof by Induction</h1>
 
 <div class="code">
 </div>
 
 <div class="doc">
-<a name="lab1"></a><h1 class="section">Induction: Proof by Induction</h1>
 
 </div>
 <div class="code">
@@ -43,7 +41,7 @@
 </div>
 
 <div class="doc">
-<a name="lab2"></a><h1 class="section">Separate Compilation</h1>
+<a name="lab1"></a><h1 class="section">Separate Compilation</h1>
 
 <div class="paragraph"> </div>
 
@@ -211,7 +209,7 @@ For this <span class="inlinecode"><span class="id" title="keyword">Require</span
 </div>
 
 <div class="doc">
-<a name="lab3"></a><h1 class="section">Proof by Induction</h1>
+<a name="lab2"></a><h1 class="section">Proof by Induction</h1>
 
 <div class="paragraph"> </div>
 
@@ -359,7 +357,7 @@ Like <span class="inlinecode"><span class="id" title="tactic">destruct</span></s
     into the context as needed.) 
 <div class="paragraph"> </div>
 
-<a name="lab4"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (basic_induction)</h4>
+<a name="lab3"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (basic_induction)</h4>
 
 
 <div class="paragraph"> </div>
@@ -449,7 +447,7 @@ Like <span class="inlinecode"><span class="id" title="tactic">destruct</span></s
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab5"></a><h4 class="section">Exercise: 2 stars, standard (double_plus)</h4>
+<a name="lab4"></a><h4 class="section">Exercise: 2 stars, standard (double_plus)</h4>
 
 
 <div class="paragraph"> </div>
@@ -495,7 +493,7 @@ Use induction to prove this simple fact about <span class="inlinecode"><span cla
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab6"></a><h4 class="section">Exercise: 2 stars, standard, optional (evenb_S)</h4>
+<a name="lab5"></a><h4 class="section">Exercise: 2 stars, standard, optional (evenb_S)</h4>
 
 
 <div class="paragraph"> </div>
@@ -531,7 +529,7 @@ Use induction to prove this simple fact about <span class="inlinecode"><span cla
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab7"></a><h4 class="section">Exercise: 1 star, standard, optional (destruct_induction)</h4>
+<a name="lab6"></a><h4 class="section">Exercise: 1 star, standard, optional (destruct_induction)</h4>
 
 
 <div class="paragraph"> </div>
@@ -558,7 +556,7 @@ Use induction to prove this simple fact about <span class="inlinecode"><span cla
 </div>
 
 <div class="doc">
-<a name="lab8"></a><h1 class="section">Proofs Within Proofs</h1>
+<a name="lab7"></a><h1 class="section">Proofs Within Proofs</h1>
 
 <div class="paragraph"> </div>
 
@@ -646,7 +644,7 @@ To use <span class="inlinecode"><span class="id" title="var">plus_comm</span></s
 </div>
 
 <div class="doc">
-<a name="lab9"></a><h1 class="section">Formal vs. Informal Proof</h1>
+<a name="lab8"></a><h1 class="section">Formal vs. Informal Proof</h1>
 
 <div class="paragraph"> </div>
 
@@ -827,7 +825,7 @@ Coq is perfectly happy with this.  For a human, however, it
     things stand). 
 <div class="paragraph"> </div>
 
-<a name="lab10"></a><h4 class="section">Exercise: 2 stars, advanced, especially useful (plus_comm_informal)</h4>
+<a name="lab9"></a><h4 class="section">Exercise: 2 stars, advanced, especially useful (plus_comm_informal)</h4>
 
 
 <div class="paragraph"> </div>
@@ -852,7 +850,7 @@ Coq is perfectly happy with this.  For a human, however, it
 <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab11"></a><h4 class="section">Exercise: 2 stars, standard, optional (eqb_refl_informal)</h4>
+<a name="lab10"></a><h4 class="section">Exercise: 2 stars, standard, optional (eqb_refl_informal)</h4>
 
 
 <div class="paragraph"> </div>
@@ -875,11 +873,11 @@ Coq is perfectly happy with this.  For a human, however, it
 </div>
 
 <div class="doc">
-<a name="lab12"></a><h1 class="section">More Exercises</h1>
+<a name="lab11"></a><h1 class="section">More Exercises</h1>
 
 <div class="paragraph"> </div>
 
-<a name="lab13"></a><h4 class="section">Exercise: 3 stars, standard, especially useful (mult_comm)</h4>
+<a name="lab12"></a><h4 class="section">Exercise: 3 stars, standard, especially useful (mult_comm)</h4>
 
 
 <div class="paragraph"> </div>
@@ -966,7 +964,7 @@ Coq is perfectly happy with this.  For a human, however, it
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab14"></a><h4 class="section">Exercise: 3 stars, standard, optional (more_exercises)</h4>
+<a name="lab13"></a><h4 class="section">Exercise: 3 stars, standard, optional (more_exercises)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1184,7 +1182,7 @@ Coq is perfectly happy with this.  For a human, however, it
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab15"></a><h4 class="section">Exercise: 2 stars, standard, optional (eqb_refl)</h4>
+<a name="lab14"></a><h4 class="section">Exercise: 2 stars, standard, optional (eqb_refl)</h4>
 
 </div>
 <div class="code">
@@ -1211,7 +1209,7 @@ Coq is perfectly happy with this.  For a human, however, it
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab16"></a><h4 class="section">Exercise: 2 stars, standard, optional (plus_swap')</h4>
+<a name="lab15"></a><h4 class="section">Exercise: 2 stars, standard, optional (plus_swap')</h4>
 
 
 <div class="paragraph"> </div>
@@ -1253,7 +1251,7 @@ Coq is perfectly happy with this.  For a human, however, it
 </div></div><div class="doc">  <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab17"></a><h4 class="section">Exercise: 3 stars, standard, especially useful (binary_commute)</h4>
+<a name="lab16"></a><h4 class="section">Exercise: 3 stars, standard, especially useful (binary_commute)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1349,7 +1347,7 @@ Coq is perfectly happy with this.  For a human, however, it
 <font size=-2>&#9744;</font> 
 <div class="paragraph"> </div>
 
-<a name="lab18"></a><h4 class="section">Exercise: 5 stars, advanced (binary_inverse)</h4>
+<a name="lab17"></a><h4 class="section">Exercise: 5 stars, advanced (binary_inverse)</h4>
 
 
 <div class="paragraph"> </div>
@@ -1499,6 +1497,5 @@ Coq is perfectly happy with this.  For a human, however, it
 </div>
 
 </div>
-</body>
 
 </html>

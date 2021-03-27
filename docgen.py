@@ -1,6 +1,7 @@
 import sys
 import os
 from typing import *
+import shutil
 
 modules = [
     'Preface',
@@ -29,31 +30,49 @@ def build_module(module_name: str):
 
 
 def gen_doc(module_name: str):
-    # readfile
+    # read and rename file
     codefile = module_name + '.v'
     with open(codefile, 'r') as f:
         coq_code = f.read()
+    tmp_file = 'tmp_' + module_name + '.v'
+    os.rename(codefile, tmp_file)
 
     # replace cb and ce
     for key in REPLACER:
         coq_code = coq_code.replace(key, REPLACER[key])
 
-    # dump a temp file
-    tmp_file = 'tmp_' + module_name + '.v'
-    with open(tmp_file, 'w+') as f:
+    # dump the new file
+    with open(codefile, 'w+') as f:
         f.write(coq_code)
 
     # generate doc
     doc_file = module_name + '.html'
     header = " --with-header " + HEADER
     footer = " --with-footer " + FOOTER
-    flags = " --html --no-glob --no-index "
+    title = " -t " + module_name
+    flags = " --html --no-glob --no-index --no-lib-name --lib-subtitles "
     output = " -o " + doc_file
-    cmd = COQDOC + header + footer + flags + output + " " + tmp_file
+    cmd = COQDOC + header + footer + title + flags + output + " " + codefile
     os.system(cmd)
 
     # remove temp file
-    os.remove(tmp_file)
+    os.rename(tmp_file, codefile)
+
+    # I don't know how to generate the subtitle QWQ
+    htmlfile = module_name + '.html'
+    with open(htmlfile, 'r') as f:
+        content = f.read()
+    b_index = content.find('<h1 class="libtitle">') + 21
+    e_index = content.find('</h1>', b_index)
+    title_str = content[b_index: e_index]
+    if ':' in title_str:
+        c_index = title_str.find(':')
+        main_title = title_str[:c_index]
+        sub_title = title_str[c_index + 2:]
+        content = content.replace(
+            title_str, main_title + '<span class="subtitle">' + sub_title)
+        with open(htmlfile, 'w+') as f:
+            f.write(content)
 
 
 if __name__ == '__main__':
