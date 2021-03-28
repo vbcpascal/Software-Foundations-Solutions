@@ -532,7 +532,7 @@ Qed.
     want to define and prove a "helper" theorem to be used
     in the proof of this one. Hint: what is [n * (1 + k)]? *)
 
-(*CB*)
+(*CBL*)
 Lemma mult_succ : forall m n : nat,
   n * S m = n + n * m.
 Proof.
@@ -546,7 +546,7 @@ Proof.
     simpl.
     reflexivity.
 Qed.
-(*CE*)
+(*CEL*)
 
 Theorem mult_comm : forall m n : nat,
   m * n = n * m.
