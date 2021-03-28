@@ -30,6 +30,13 @@ def build_module(module_name: str):
     os.system(cmd)
 
 
+def test_module(module_name: str):
+    if module_name == 'Preface':
+        return
+    cmd = COQC + ' -Q . LF ' + module_name + 'Test.v'
+    os.system(cmd)
+
+
 def gen_doc(module_name: str):
     # read and rename file
     codefile = module_name + '.v'
@@ -85,8 +92,15 @@ if __name__ == '__main__':
 
     if 'build' in options or do_all:
         for module in modules:
+            print("\033[95m[ Begin to build %s ]\033[0m" % (module))
             build_module(module)
+
+    if 'test' in options or do_all:
+        for module in modules[1:]:
+            print("\033[94m[ Begin to test %s ]\033[0m" % (module))
+            test_module(module)
 
     if 'doc' in options or do_all:
         for module in modules:
+            print("\033[96m[ Begin to generate html of %s ]\033[0m" % (module))
             gen_doc(module)
