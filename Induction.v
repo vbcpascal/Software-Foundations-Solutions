@@ -853,26 +853,46 @@ Definition manual_grade_for_binary_inverse_b : option (nat*string) := None.
         define this using [nat_to_bin] and [bin_to_nat]! *)
 
 (*CB*)
+Definition double_bin (n : bin) : bin :=
+  match n with
+  | Z => Z
+  | m => B0 m
+  end.
+
 Fixpoint normalize (n : bin) : bin := 
   match n with
   | Z => Z
-  | B0 m => 
-    match normalize m with
-    | Z => Z
-    | m' => B0 m' 
-    end
-  | B1 m => B1 (normalize m)
+  | B0 m => double_bin (normalize m)
+  | B1 m => incr (double_bin (normalize m))
   end.
+
+Lemma double_incr : forall b,
+  double_bin (incr b) = incr (incr (double_bin b)).
+Proof.
+  intros b. induction b; try reflexivity.
+Qed.  
+
+Lemma n2b_double : forall n,
+  nat_to_bin (n + n) = double_bin (nat_to_bin n).
+Proof.
+  intros n. induction n; try reflexivity.
+  simpl. rewrite <- plus_n_Sm. simpl.
+  rewrite -> IHn.
+  rewrite <- double_incr.
+  reflexivity.
+Qed.
 
 Theorem bin_nat_bin : forall b,
   nat_to_bin (bin_to_nat b) = normalize b.
 Proof.
-  intros b. induction b.
-  - reflexivity.
-  - (* b = B0 b *)
-    simpl (bin_to_nat (B0 b)).
-    simpl. destruct (normalize b).
-Admitted.
+  intros b. 
+  induction b;
+  try reflexivity;  
+  simpl;
+  rewrite n2b_double;
+  rewrite IHb;
+  reflexivity.
+Qed.
 (*CE*)
 
 (* Do not modify the following line: *)

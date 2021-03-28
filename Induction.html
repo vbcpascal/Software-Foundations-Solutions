@@ -1458,27 +1458,50 @@ Coq is perfectly happy with this.  For a human, however, it
  </div><div class="solution"><div> 
 </div>
 <div class="code">
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">double_bin</span> (<span class="id" title="var">n</span> : <span class="id" title="var">bin</span>) : <span class="id" title="var">bin</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">Z</span> =&gt; <span class="id" title="var">Z</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">m</span> =&gt; <span class="id" title="var">B0</span> <span class="id" title="var">m</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
 <span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">normalize</span> (<span class="id" title="var">n</span> : <span class="id" title="var">bin</span>) : <span class="id" title="var">bin</span> := <br/>
 &nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">n</span> <span class="id" title="keyword">with</span><br/>
 &nbsp;&nbsp;| <span class="id" title="var">Z</span> =&gt; <span class="id" title="var">Z</span><br/>
-&nbsp;&nbsp;| <span class="id" title="var">B0</span> <span class="id" title="var">m</span> =&gt; <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="var">normalize</span> <span class="id" title="var">m</span> <span class="id" title="keyword">with</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">Z</span> =&gt; <span class="id" title="var">Z</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" title="var">m'</span> =&gt; <span class="id" title="var">B0</span> <span class="id" title="var">m'</span> <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span><br/>
-&nbsp;&nbsp;| <span class="id" title="var">B1</span> <span class="id" title="var">m</span> =&gt; <span class="id" title="var">B1</span> (<span class="id" title="var">normalize</span> <span class="id" title="var">m</span>)<br/>
+&nbsp;&nbsp;| <span class="id" title="var">B0</span> <span class="id" title="var">m</span> =&gt; <span class="id" title="var">double_bin</span> (<span class="id" title="var">normalize</span> <span class="id" title="var">m</span>)<br/>
+&nbsp;&nbsp;| <span class="id" title="var">B1</span> <span class="id" title="var">m</span> =&gt; <span class="id" title="var">incr</span> (<span class="id" title="var">double_bin</span> (<span class="id" title="var">normalize</span> <span class="id" title="var">m</span>))<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <span class="id" title="var">double_incr</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">b</span>,<br/>
+&nbsp;&nbsp;<span class="id" title="var">double_bin</span> (<span class="id" title="var">incr</span> <span class="id" title="var">b</span>) = <span class="id" title="var">incr</span> (<span class="id" title="var">incr</span> (<span class="id" title="var">double_bin</span> <span class="id" title="var">b</span>)).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">b</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">b</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Lemma</span> <span class="id" title="var">n2b_double</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">n</span>,<br/>
+&nbsp;&nbsp;<span class="id" title="var">nat_to_bin</span> (<span class="id" title="var">n</span> + <span class="id" title="var">n</span>) = <span class="id" title="var">double_bin</span> (<span class="id" title="var">nat_to_bin</span> <span class="id" title="var">n</span>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">n</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">plus_n_Sm</span>. <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -&gt; <span class="id" title="var">IHn</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">double_incr</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
 <span class="id" title="keyword">Theorem</span> <span class="id" title="var">bin_nat_bin</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">b</span>,<br/>
 &nbsp;&nbsp;<span class="id" title="var">nat_to_bin</span> (<span class="id" title="var">bin_to_nat</span> <span class="id" title="var">b</span>) = <span class="id" title="var">normalize</span> <span class="id" title="var">b</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">b</span>. <span class="id" title="tactic">induction</span> <span class="id" title="var">b</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">reflexivity</span>.<br/>
-&nbsp;&nbsp;- <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> (<span class="id" title="var">bin_to_nat</span> (<span class="id" title="var">B0</span> <span class="id" title="var">b</span>)).<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">normalize</span> <span class="id" title="var">b</span>).<br/>
-<span class="id" title="var">Admitted</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">b</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">b</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>;  <br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">n2b_double</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">IHb</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
 </div>
 
 <div class="doc">
