@@ -10,6 +10,7 @@ modules = [
     'Lists',
     'Poly',
     'Tactics',
+    'Logic',
 ]
 
 COQC = 'coqc'
