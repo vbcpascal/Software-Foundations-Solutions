@@ -1926,8 +1926,63 @@ Definition de_morgan_not_and_not := forall P Q:Prop,
 Definition implies_to_or := forall P Q:Prop,
   (P->Q) -> (~P\/Q).
 
-(* FILL IN HERE
+(*CB*)
+Theorem im_em_dne: 
+  excluded_middle -> double_negation_elimination.
+Proof.
+  unfold excluded_middle.
+  unfold double_negation_elimination.
+  unfold not. intros.
+  assert (H': P \/ (P -> False)). { apply H. }
+  destruct H'.
+  - apply H1.
+  - apply H0 in H1. destruct H1.
+Qed.
 
-    [] *)
+Theorem im_dne_peirce : 
+  double_negation_elimination -> peirce.
+Proof.
+  unfold double_negation_elimination.
+  unfold peirce. unfold not. intros.
+  apply H. intros HNP. apply H0 in H.
+  - apply HNP in H. apply H.
+  - intros H'. apply H'. intros HP.
+    apply HNP in HP. destruct HP.
+Qed.
+
+Theorem im_peirce_dmnn :
+  peirce -> de_morgan_not_and_not.
+Proof.
+  unfold peirce. 
+  unfold de_morgan_not_and_not.
+  unfold not. intros.
+  apply H with (Q := False). intros.
+  exfalso. apply H0. split.
+  - intros HP. apply H1. left. apply HP.
+  - intros HQ. apply H1. right. apply HQ.
+Qed.
+
+Theorem im_dmnn_ito:
+  de_morgan_not_and_not -> implies_to_or.
+Proof.
+  unfold de_morgan_not_and_not.
+  unfold implies_to_or.
+  unfold not. intros.
+  apply H. intros [H1 H2]. 
+  apply H1. intros HP.
+  apply H2. apply H0. apply HP.
+Qed.
+
+Theorem im_ito_em :
+  implies_to_or -> excluded_middle.
+Proof.
+  unfold implies_to_or.
+  unfold excluded_middle.
+  unfold not. intros.
+  apply or_commut.
+  apply H. intros HP. apply HP.
+Qed.
+
+(*CE*)
 
 (* 2020-09-09 20:51 *)
