@@ -2072,19 +2072,6 @@ Proof.
     apply H1 in H2. destruct H2.  
 Qed.
 (*CEL*)
-
-(* Theorems not proved:
-
-Theorem im_ito_dne: 
-  implies_to_or -> double_negation_elimination. 
-
-Theorem im_ito_peirce:
-  implies_to_or -> peirce.
-
-Theorem im_ito_dmnn:
-  implies_to_or -> de_morgan_not_and_not.
-
-*)
   
 (*CBL*)
 Theorem im_dmnn_em:
@@ -2098,10 +2085,33 @@ Proof.
 Qed.
 (*CEL*)
 
+(*CBL*)
+Theorem im_dmnn_dne: 
+  de_morgan_not_and_not -> double_negation_elimination.
+Proof.
+  unfold de_morgan_not_and_not.
+  unfold double_negation_elimination.
+  intros. destruct (H P (~P)).
+  - unfold not. intros [H1 H2].
+    apply H2. apply H1. 
+  - apply H1.
+  - apply H0 in H1. destruct H1.
+Qed.
+(*CEL*)
 
-
-
-
-
+(*CBL*)
+Theorem im_dmnn_peirce: 
+  de_morgan_not_and_not -> peirce.
+Proof.
+  unfold de_morgan_not_and_not.
+  unfold peirce.
+  intros. destruct (H P (P -> Q)).
+  - unfold not. intros [H1 H2].
+    apply H2. intros. 
+    apply H1 in H3. destruct H3.
+  - apply H1.
+  - apply H0. apply H1.
+Qed.
+(*CEL*)
 
 (* 2020-09-09 20:51 *)
