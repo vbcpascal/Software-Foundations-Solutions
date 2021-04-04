@@ -2114,4 +2114,17 @@ Proof.
 Qed.
 (*CEL*)
 
+(*CBL*)
+Theorem im_ito_dne: 
+  implies_to_or -> double_negation_elimination. 
+Proof.
+  unfold implies_to_or.
+  unfold double_negation_elimination.
+  intros. destruct (H P P).
+  - intros. apply H1.
+  - apply H0 in H1. destruct H1.
+  - apply H1.
+Qed.
+(*CBE*)
+
 (* 2020-09-09 20:51 *)
