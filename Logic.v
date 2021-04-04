@@ -1982,7 +1982,59 @@ Proof.
   apply or_commut.
   apply H. intros HP. apply HP.
 Qed.
-
 (*CE*)
+
+(*CBL*)
+Theorem im_peirce_dne:
+  peirce -> double_negation_elimination.
+Proof.
+  unfold peirce.
+  unfold double_negation_elimination.
+  unfold not. intros.
+  apply H with (Q := False).
+  intros. apply H0 in H1. destruct H1.
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_dne_em:
+  double_negation_elimination -> excluded_middle.
+Proof.
+  unfold double_negation_elimination.
+  unfold excluded_middle.
+  unfold not. intros.
+  apply H. intros. 
+  apply H0. right. intros. 
+  apply H0. left. apply H1.
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_dne_dmnn: 
+  double_negation_elimination -> de_morgan_not_and_not.
+Proof.
+  unfold double_negation_elimination.
+  unfold de_morgan_not_and_not.
+  intros. apply H. unfold not.
+  intros HPQ. apply H0. split.
+  all: unfold not; intros; apply HPQ.
+  - left. apply H1.
+  - right. apply H1. 
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_dne_ito: 
+  double_negation_elimination -> implies_to_or.
+Proof.
+  unfold double_negation_elimination.
+  unfold implies_to_or. intros.
+  apply H. unfold not. intros.
+  apply H1. left. intros. 
+  apply H1. right. apply H0. apply H2.
+Qed.
+(*CEL*)
+
+
 
 (* 2020-09-09 20:51 *)

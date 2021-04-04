@@ -1,0 +1,3 @@
+[submodule "coqtop/coqtop-elaborate"]
+	path = coqtop/coqtop-elaborate
+	url = https://github.com/Krantz-XRF/coqtop-elaborate.git
