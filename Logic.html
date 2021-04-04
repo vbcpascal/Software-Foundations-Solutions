@@ -3124,7 +3124,7 @@ It may seem strange that the general excluded middle is not
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_dne_peirce</span> : <br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_dne_peirce</span>: <br/>
 &nbsp;&nbsp;<span class="id" title="var">double_negation_elimination</span> -&gt; <span class="id" title="var">peirce</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">double_negation_elimination</span>.<br/>
@@ -3136,7 +3136,7 @@ It may seem strange that the general excluded middle is not
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_dmnn</span> :<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_dmnn</span>:<br/>
 &nbsp;&nbsp;<span class="id" title="var">peirce</span> -&gt; <span class="id" title="var">de_morgan_not_and_not</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
@@ -3161,13 +3161,12 @@ It may seem strange that the general excluded middle is not
 <span class="id" title="keyword">Qed</span>.<br/>
 
 <br/>
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_ito_em</span> :<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_ito_em</span>:<br/>
 &nbsp;&nbsp;<span class="id" title="var">implies_to_or</span> -&gt; <span class="id" title="var">excluded_middle</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">implies_to_or</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">or_commut</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">or_commut</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>. <span class="id" title="tactic">intros</span> <span class="id" title="var">HP</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">HP</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 </div>
@@ -3184,8 +3183,7 @@ It may seem strange that the general excluded middle is not
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">double_negation_elimination</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H1</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 </div>

@@ -1939,7 +1939,7 @@ Proof.
   - apply H0 in H1. destruct H1.
 Qed.
 
-Theorem im_dne_peirce : 
+Theorem im_dne_peirce: 
   double_negation_elimination -> peirce.
 Proof.
   unfold double_negation_elimination.
@@ -1950,7 +1950,7 @@ Proof.
     apply HNP in HP. destruct HP.
 Qed.
 
-Theorem im_peirce_dmnn :
+Theorem im_peirce_dmnn:
   peirce -> de_morgan_not_and_not.
 Proof.
   unfold peirce. 
@@ -1973,13 +1973,12 @@ Proof.
   apply H2. apply H0. apply HP.
 Qed.
 
-Theorem im_ito_em :
+Theorem im_ito_em:
   implies_to_or -> excluded_middle.
 Proof.
   unfold implies_to_or.
   unfold excluded_middle.
-  unfold not. intros.
-  apply or_commut.
+  intros. apply or_commut.
   apply H. intros HP. apply HP.
 Qed.
 (*CE*)
@@ -1990,8 +1989,7 @@ Theorem im_peirce_dne:
 Proof.
   unfold peirce.
   unfold double_negation_elimination.
-  unfold not. intros.
-  apply H with (Q := False).
+  intros. apply H with (Q := False).
   intros. apply H0 in H1. destruct H1.
 Qed.
 (*CEL*)
