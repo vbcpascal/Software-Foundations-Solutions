@@ -2062,5 +2062,19 @@ Proof.
 Qed.
 (*CEL*)
 
+(*CBL*)
+Theorem im_em_peirce:
+  excluded_middle -> peirce.
+Proof.
+  unfold excluded_middle.
+  unfold peirce.
+  intros. destruct (H P).
+  - apply H1.
+  - exfalso. apply H1. apply H0. intros.
+    apply H1 in H2. destruct H2.  
+Qed.
+(*CEL*)
+
+
 
 (* 2020-09-09 20:51 *)
