@@ -2035,6 +2035,32 @@ Proof.
 Qed.
 (*CEL*)
 
+(*CBL*)
+Theorem im_em_ito:
+  excluded_middle -> implies_to_or.
+Proof.
+  unfold excluded_middle.
+  unfold implies_to_or.
+  intros. destruct (H P).
+  - right. apply H0. apply H1.
+  - left. apply H1.
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_em_dmnn:
+  excluded_middle -> de_morgan_not_and_not.
+Proof.
+  unfold excluded_middle.
+  unfold de_morgan_not_and_not.
+  intros. destruct (H P).
+  - left. apply H1.
+  - right. destruct (H Q).
+    + apply H2.
+    + exfalso. apply H0. split.
+      apply H1. apply H2.  
+Qed.
+(*CEL*)
 
 
 (* 2020-09-09 20:51 *)
