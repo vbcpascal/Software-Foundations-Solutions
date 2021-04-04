@@ -2073,6 +2073,35 @@ Proof.
 Qed.
 (*CEL*)
 
+(* Theorems not proved:
+
+Theorem im_ito_dne: 
+  implies_to_or -> double_negation_elimination. 
+
+Theorem im_ito_peirce:
+  implies_to_or -> peirce.
+
+Theorem im_ito_dmnn:
+  implies_to_or -> de_morgan_not_and_not.
+
+*)
+  
+(*CBL*)
+Theorem im_dmnn_em:
+  de_morgan_not_and_not -> excluded_middle.
+Proof.
+  unfold de_morgan_not_and_not.
+  unfold excluded_middle.
+  intros. apply H. unfold not.
+  intros [H1 H2].
+  apply H2. intros. apply H1. apply H0.  
+Qed.
+(*CEL*)
+
+
+
+
+
 
 
 (* 2020-09-09 20:51 *)

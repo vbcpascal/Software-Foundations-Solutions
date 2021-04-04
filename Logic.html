@@ -3309,6 +3309,31 @@ It may seem strange that the general excluded middle is not
 <div class="code">
 
 <br/>
+
+<br/>
+</div>
+
+<div class="doc">
+</div><div class="solution-lemma"><div> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_dmnn_em</span>:<br/>
+&nbsp;&nbsp;<span class="id" title="var">de_morgan_not_and_not</span> -&gt; <span class="id" title="var">excluded_middle</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">de_morgan_not_and_not</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>. <span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">H1</span> <span class="id" title="var">H2</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H2</span>. <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+
+<div class="doc">
+</div></div><div class="doc"> 
+</div>
+<div class="code">
+
+<br/>
 </div>
 <div id="gitalk-container" style="margin: 30px;padding-bottom: 30px;"></div>
 <script>
