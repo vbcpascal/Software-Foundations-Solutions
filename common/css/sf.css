@@ -1073,42 +1073,21 @@ table.vc tbody tr td.tab {
     font-family: 'JetbrainsMono';
     font-weight: bold;
     font-style: normal;
-    src: url('../media/font/JetbrainsMono/JetBrainsMono-Bold.woff2');
-}
-
-@font-face {
-    font-family: 'JetbrainsMono';
-    font-weight: bolder;
-    font-style: normal;
-    src: url('../media/font/JetbrainsMono/JetBrainsMono-ExtraBold.woff2');
-}
-
-@font-face {
-    font-family: 'JetbrainsMono';
-    font-weight: lighter;
-    font-style: normal;
-    src: url('../media/font/JetbrainsMono/JetBrainsMono-ExtraLight.woff2');
+    src: url('../media/font/CoqBrainsMono/CoqBrainsMono-Regular.otf');
 }
 
 @font-face {
     font-family: 'JetbrainsMono';
     font-weight: normal;
     font-style: normal;
-    src: url('../media/font/JetbrainsMono/JetBrainsMono-Light.woff2');
+    src: url('../media/font/CoqBrainsMono/CoqBrainsMono-Light.otf');
 }
 
 @font-face {
     font-family: 'JetbrainsMono';
     font-weight: 700;
     font-style: normal;
-    src: url('../media/font/JetbrainsMono/JetBrainsMono-Medium.woff2');
-}
-
-@font-face {
-    font-family: 'JetbrainsMono';
-    font-weight: bold;
-    font-style: italic;
-    src: url('../media/font/JetbrainsMono/JetBrainsMono-BoldItalic.woff2');
+    src: url('../media/font/CoqBrainsMono/CoqBrainsMono-Medium.woff2');
 }
 
 /* A few specific things for the top-level SF landing page */
