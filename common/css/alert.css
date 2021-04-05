@@ -1,7 +1,6 @@
-
 .solution {
   padding-top: .5rem;
-  background-color:rgba(24,144,255,0.1);
+  background-color: rgba(24, 144, 255, 0.1);
   border: 1px solid #1890ff;
   border-radius: .4rem;
   font-size: smaller;
@@ -10,7 +9,7 @@
 
 .solution-lemma {
   padding-top: .5rem;
-  background-color:rgba(82,196,26,0.1);
+  background-color: rgba(82, 196, 26, 0.1);
   border: 1px solid #52c41a;
   border-radius: .4rem;
   font-size: smaller;
@@ -19,17 +18,19 @@
 
 .warning {
   padding: .5rem 1rem;
-  background-color: rgba(250,140,22,0.1);
+  background-color: rgba(250, 140, 22, 0.1);
   border: 1px solid #fa8c16;
   border-radius: .4rem;
 }
 
 .mycomment {
-  padding: .5rem 1rem;
-  background-color: rgba(0,0,0,0.05);
-  border: 1px solid rgb(201, 201, 201);
-  border-radius: .4rem;
+  margin-left: 1em;
+  padding-left: 1em;
+  line-height: initial;
   color: #777;
+  font-style: italic;
+  /* border-left: 3px solid #ddd;
+  background-color: #eee; */
 }
 
 .article_link {

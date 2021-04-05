@@ -23,6 +23,8 @@ REPLACER = {
     '(*CE*)': '(** #</div></div><div class="doc"># *)',
     '(*CBL*)': '(** #</div><div class="solution-lemma"><div># *)',
     '(*CEL*)': '(** #</div></div><div class="doc"># *)',
+    '(*CB-CMT*)': '(** #</div><div class="mycomment"><div># *)',
+    '(*CE-CMT*)': '(** #</div></div><div class="doc"># *)',
 }
 
 
@@ -45,6 +47,8 @@ def gen_doc(module_name: str):
         coq_code = f.read()
     tmp_file = 'tmp_' + module_name + '.v'
     os.rename(codefile, tmp_file)
+
+    # Replace
 
     # replace cb and ce
     for key in REPLACER:

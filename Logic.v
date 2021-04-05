@@ -1926,6 +1926,16 @@ Definition de_morgan_not_and_not := forall P Q:Prop,
 Definition implies_to_or := forall P Q:Prop,
   (P->Q) -> (~P\/Q).
 
+(*CB-CMT*)
+
+(** As shown below, here I give all the proofs (although some are not 
+    straightforward). All the major proofs with blue borders are given
+    first. Additional proofs will be given next with green borders. *)
+
+(*CE-CMT*)
+
+(** #<object data="common/media/image/excluded_middle.svg" type="image/svg+xml" width=70%></object># *)
+
 (*CB*)
 Theorem im_em_dne: 
   excluded_middle -> double_negation_elimination.
@@ -1983,29 +1993,55 @@ Proof.
 Qed.
 (*CE*)
 
+(*CB-CMT*)
+(** Deriving other statements with excluded_middle. 
+
+    Key: destruct propositions of the goals. *)
+(*CE-CMT*)
+
 (*CBL*)
-Theorem im_peirce_dne:
-  peirce -> double_negation_elimination.
+Theorem im_em_peirce:
+  excluded_middle -> peirce.
 Proof.
+  unfold excluded_middle.
   unfold peirce.
-  unfold double_negation_elimination.
-  intros. apply H with (Q := False).
-  intros. apply H0 in H1. destruct H1.
+  intros. destruct (H P).
+  - apply H1.
+  - exfalso. apply H1. apply H0. intros.
+    apply H1 in H2. destruct H2.  
 Qed.
 (*CEL*)
 
 (*CBL*)
-Theorem im_dne_em:
-  double_negation_elimination -> excluded_middle.
+Theorem im_em_dmnn:
+  excluded_middle -> de_morgan_not_and_not.
 Proof.
-  unfold double_negation_elimination.
   unfold excluded_middle.
-  intros. apply H. 
-  unfold not. intros. 
-  apply H0. right. intros. 
-  apply H0. left. apply H1.
+  unfold de_morgan_not_and_not.
+  intros. destruct (H P).
+  - left. apply H1.
+  - right. destruct (H Q).
+    + apply H2.
+    + exfalso. apply H0. split.
+      apply H1. apply H2.  
 Qed.
 (*CEL*)
+
+(*CBL*)
+Theorem im_em_ito:
+  excluded_middle -> implies_to_or.
+Proof.
+  unfold excluded_middle.
+  unfold implies_to_or.
+  intros. destruct (H P).
+  - right. apply H0. apply H1.
+  - left. apply H1.
+Qed.
+(*CEL*)
+
+(*CB-CMT*)
+(** Deriving other statements with double_negation_elimination. *)
+(*CE-CMT*)
 
 (*CBL*)
 Theorem im_dne_dmnn: 
@@ -2034,45 +2070,67 @@ Qed.
 (*CEL*)
 
 (*CBL*)
-Theorem im_em_ito:
-  excluded_middle -> implies_to_or.
+Theorem im_dne_em:
+  double_negation_elimination -> excluded_middle.
 Proof.
+  unfold double_negation_elimination.
   unfold excluded_middle.
-  unfold implies_to_or.
-  intros. destruct (H P).
-  - right. apply H0. apply H1.
-  - left. apply H1.
+  intros. apply H. 
+  unfold not. intros. 
+  apply H0. right. intros. 
+  apply H0. left. apply H1.
 Qed.
 (*CEL*)
 
-(*CBL*)
-Theorem im_em_dmnn:
-  excluded_middle -> de_morgan_not_and_not.
-Proof.
-  unfold excluded_middle.
-  unfold de_morgan_not_and_not.
-  intros. destruct (H P).
-  - left. apply H1.
-  - right. destruct (H Q).
-    + apply H2.
-    + exfalso. apply H0. split.
-      apply H1. apply H2.  
-Qed.
-(*CEL*)
+(*CB-CMT*)
+(** Deriving other statements with peirce. 
+
+    Key: apply peirce with False, with "The Devil's Contract". *)
+(*CE-CMT*)
 
 (*CBL*)
-Theorem im_em_peirce:
-  excluded_middle -> peirce.
+Theorem im_peirce_ito:
+  peirce -> implies_to_or.
 Proof.
-  unfold excluded_middle.
   unfold peirce.
-  intros. destruct (H P).
-  - apply H1.
-  - exfalso. apply H1. apply H0. intros.
-    apply H1 in H2. destruct H2.  
+  unfold implies_to_or.
+  intros. apply H with (Q := False).
+  unfold not. intros.
+  left. intros. apply H0 in H2. apply H1. 
+  right. apply H2.
 Qed.
 (*CEL*)
-  
+
+(*CBL*)
+Theorem im_peirce_em: 
+  peirce -> excluded_middle.
+Proof.
+  unfold peirce.
+  unfold excluded_middle.
+  intros. apply H with (Q := False).
+  unfold not. intros. 
+  right. intros HP. apply H0. 
+  left. apply HP.
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_peirce_dne:
+  peirce -> double_negation_elimination.
+Proof.
+  unfold peirce.
+  unfold double_negation_elimination.
+  intros. apply H with (Q := False).
+  intros. apply H0 in H1. destruct H1.
+Qed.
+(*CEL*)
+
+(*CB-CMT*)
+(** Deriving other statements with de_morgan_not_and_not. 
+
+    Key: construct a proposition with De Morgan's law. *)
+(*CE-CMT*)
+
 (*CBL*)
 Theorem im_dmnn_em:
   de_morgan_not_and_not -> excluded_middle.
@@ -2114,6 +2172,14 @@ Proof.
 Qed.
 (*CEL*)
 
+(*CB-CMT*)
+(** Deriving other statements with implies_to_or. 
+
+    In fact, we prove other statements by proving 
+    the law of excluded middle by apply implies_to_or 
+    with double P. *)
+(*CE-CMT*)
+
 (*CBL*)
 Theorem im_ito_dne: 
   implies_to_or -> double_negation_elimination. 
@@ -2124,32 +2190,6 @@ Proof.
   - intros. apply H1.
   - apply H0 in H1. destruct H1.
   - apply H1.
-Qed.
-(*CEL*)
-
-(*CBL*)
-Theorem im_peirce_em: 
-  peirce -> excluded_middle.
-Proof.
-  unfold peirce.
-  unfold excluded_middle.
-  intros. apply H with (Q := False).
-  unfold not. intros. 
-  right. intros HP. apply H0. 
-  left. apply HP.
-Qed.
-(*CEL*)
-
-(*CBL*)
-Theorem im_peirce_ito:
-  peirce -> implies_to_or.
-Proof.
-  unfold peirce.
-  unfold implies_to_or.
-  intros. apply H with (Q := False).
-  unfold not. intros.
-  left. intros. apply H0 in H2. apply H1. 
-  right. apply H2.
 Qed.
 (*CEL*)
 
@@ -2183,5 +2223,7 @@ Proof.
   - left. apply H1.
 Qed.
 (*CEL*)
+
+(** [] *)
 
 (* 2020-09-09 20:51 *)

@@ -3108,7 +3108,21 @@ It may seem strange that the general excluded middle is not
 </div>
 
 <div class="doc">
-</div><div class="solution"><div> 
+</div><div class="mycomment"><div> 
+<div class="paragraph"> </div>
+
+ As shown below, here I give all the proofs (although some are not 
+    straightforward). All the major proofs with blue borders are given
+    first. Additional proofs will be given next with green borders. 
+<div class="paragraph"> </div>
+
+ </div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+ <object data="common/media/image/excluded_middle.svg" type="image/svg+xml" width=70%></object> 
+<div class="paragraph"> </div>
+
+ </div><div class="solution"><div> 
 </div>
 <div class="code">
 <span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_em_dne</span>: <br/>
@@ -3175,16 +3189,25 @@ It may seem strange that the general excluded middle is not
 </div></div><div class="doc"> 
 <div class="paragraph"> </div>
 
+ </div><div class="mycomment"><div>  Deriving other statements with excluded_middle. 
+
+<div class="paragraph"> </div>
+
+    Key: destruct propositions of the goals.  </div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
  </div><div class="solution-lemma"><div> 
 </div>
 <div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_dne</span>:<br/>
-&nbsp;&nbsp;<span class="id" title="var">peirce</span> -&gt; <span class="id" title="var">double_negation_elimination</span>.<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_em_peirce</span>:<br/>
+&nbsp;&nbsp;<span class="id" title="var">excluded_middle</span> -&gt; <span class="id" title="var">peirce</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">double_negation_elimination</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">P</span>).<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="var">exfalso</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H2</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H2</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 </div>
 
@@ -3195,20 +3218,43 @@ It may seem strange that the general excluded middle is not
  </div><div class="solution-lemma"><div> 
 </div>
 <div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_dne_em</span>:<br/>
-&nbsp;&nbsp;<span class="id" title="var">double_negation_elimination</span> -&gt; <span class="id" title="var">excluded_middle</span>.<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_em_dmnn</span>:<br/>
+&nbsp;&nbsp;<span class="id" title="var">excluded_middle</span> -&gt; <span class="id" title="var">de_morgan_not_and_not</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">double_negation_elimination</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">right</span>. <span class="id" title="tactic">intros</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">de_morgan_not_and_not</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">P</span>).<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">right</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">Q</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">H2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">exfalso</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H2</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 </div>
 
 <div class="doc">
 </div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+ </div><div class="solution-lemma"><div> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_em_ito</span>:<br/>
+&nbsp;&nbsp;<span class="id" title="var">excluded_middle</span> -&gt; <span class="id" title="var">implies_to_or</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">implies_to_or</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">P</span>).<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">right</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+
+<div class="doc">
+</div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+ </div><div class="mycomment"><div>  Deriving other statements with double_negation_elimination.  </div></div><div class="doc"> 
 <div class="paragraph"> </div>
 
  </div><div class="solution-lemma"><div> 
@@ -3252,14 +3298,15 @@ It may seem strange that the general excluded middle is not
  </div><div class="solution-lemma"><div> 
 </div>
 <div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_em_ito</span>:<br/>
-&nbsp;&nbsp;<span class="id" title="var">excluded_middle</span> -&gt; <span class="id" title="var">implies_to_or</span>.<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_dne_em</span>:<br/>
+&nbsp;&nbsp;<span class="id" title="var">double_negation_elimination</span> -&gt; <span class="id" title="var">excluded_middle</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">double_negation_elimination</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">implies_to_or</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">P</span>).<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">right</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">right</span>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 </div>
 
@@ -3267,44 +3314,73 @@ It may seem strange that the general excluded middle is not
 </div></div><div class="doc"> 
 <div class="paragraph"> </div>
 
- </div><div class="solution-lemma"><div> 
-</div>
-<div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_em_dmnn</span>:<br/>
-&nbsp;&nbsp;<span class="id" title="var">excluded_middle</span> -&gt; <span class="id" title="var">de_morgan_not_and_not</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">de_morgan_not_and_not</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">P</span>).<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">right</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">Q</span>).<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">apply</span> <span class="id" title="var">H2</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">exfalso</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">split</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H2</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-</div>
+ </div><div class="mycomment"><div>  Deriving other statements with peirce. 
 
-<div class="doc">
-</div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+    Key: apply peirce with False, with "The Devil's Contract".  </div></div><div class="doc"> 
 <div class="paragraph"> </div>
 
  </div><div class="solution-lemma"><div> 
 </div>
 <div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_em_peirce</span>:<br/>
-&nbsp;&nbsp;<span class="id" title="var">excluded_middle</span> -&gt; <span class="id" title="var">peirce</span>.<br/>
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_ito</span>:<br/>
+&nbsp;&nbsp;<span class="id" title="var">peirce</span> -&gt; <span class="id" title="var">implies_to_or</span>.<br/>
 <span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">destruct</span> (<span class="id" title="var">H</span> <span class="id" title="var">P</span>).<br/>
-&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
-&nbsp;&nbsp;- <span class="id" title="var">exfalso</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>. <span class="id" title="tactic">intros</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H2</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H2</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">implies_to_or</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">left</span>. <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H2</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">right</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H2</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 </div>
 
 <div class="doc">
 </div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+ </div><div class="solution-lemma"><div> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_em</span>: <br/>
+&nbsp;&nbsp;<span class="id" title="var">peirce</span> -&gt; <span class="id" title="var">excluded_middle</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">right</span>. <span class="id" title="tactic">intros</span> <span class="id" title="var">HP</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">HP</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+
+<div class="doc">
+</div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+ </div><div class="solution-lemma"><div> 
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_dne</span>:<br/>
+&nbsp;&nbsp;<span class="id" title="var">peirce</span> -&gt; <span class="id" title="var">double_negation_elimination</span>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">double_negation_elimination</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H1</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+</div>
+
+<div class="doc">
+</div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+ </div><div class="mycomment"><div>  Deriving other statements with de_morgan_not_and_not. 
+
+<div class="paragraph"> </div>
+
+    Key: construct a proposition with De Morgan's law.  </div></div><div class="doc"> 
 <div class="paragraph"> </div>
 
  </div><div class="solution-lemma"><div> 
@@ -3366,6 +3442,15 @@ It may seem strange that the general excluded middle is not
 </div></div><div class="doc"> 
 <div class="paragraph"> </div>
 
+ </div><div class="mycomment"><div>  Deriving other statements with implies_to_or. 
+
+<div class="paragraph"> </div>
+
+    In fact, we prove other statements by proving 
+    the law of excluded middle by apply implies_to_or 
+    with double P.  </div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
  </div><div class="solution-lemma"><div> 
 </div>
 <div class="code">
@@ -3378,44 +3463,6 @@ It may seem strange that the general excluded middle is not
 &nbsp;&nbsp;- <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
 &nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H1</span>. <span class="id" title="tactic">destruct</span> <span class="id" title="var">H1</span>.<br/>
 &nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-</div>
-
-<div class="doc">
-</div></div><div class="doc"> 
-<div class="paragraph"> </div>
-
- </div><div class="solution-lemma"><div> 
-</div>
-<div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_em</span>: <br/>
-&nbsp;&nbsp;<span class="id" title="var">peirce</span> -&gt; <span class="id" title="var">excluded_middle</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">excluded_middle</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">right</span>. <span class="id" title="tactic">intros</span> <span class="id" title="var">HP</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">left</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">HP</span>.<br/>
-<span class="id" title="keyword">Qed</span>.<br/>
-</div>
-
-<div class="doc">
-</div></div><div class="doc"> 
-<div class="paragraph"> </div>
-
- </div><div class="solution-lemma"><div> 
-</div>
-<div class="code">
-<span class="id" title="keyword">Theorem</span> <span class="id" title="var">im_peirce_ito</span>:<br/>
-&nbsp;&nbsp;<span class="id" title="var">peirce</span> -&gt; <span class="id" title="var">implies_to_or</span>.<br/>
-<span class="id" title="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">peirce</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">implies_to_or</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Q</span> := <span class="id" title="var">False</span>).<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">not</span>. <span class="id" title="tactic">intros</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">left</span>. <span class="id" title="tactic">intros</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H2</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H1</span>.<br/>
-&nbsp;&nbsp;<span class="id" title="tactic">right</span>. <span class="id" title="tactic">apply</span> <span class="id" title="var">H2</span>.<br/>
 <span class="id" title="keyword">Qed</span>.<br/>
 </div>
 
@@ -3464,6 +3511,9 @@ It may seem strange that the general excluded middle is not
 
 <div class="doc">
 </div></div><div class="doc"> 
+<div class="paragraph"> </div>
+
+ <font size=-2>&#9744;</font> 
 </div>
 <div class="code">
 
