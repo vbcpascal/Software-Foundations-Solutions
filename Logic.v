@@ -2000,8 +2000,8 @@ Theorem im_dne_em:
 Proof.
   unfold double_negation_elimination.
   unfold excluded_middle.
-  unfold not. intros.
-  apply H. intros. 
+  intros. apply H. 
+  unfold not. intros. 
   apply H0. right. intros. 
   apply H0. left. apply H1.
 Qed.
@@ -2125,6 +2125,63 @@ Proof.
   - apply H0 in H1. destruct H1.
   - apply H1.
 Qed.
-(*CBE*)
+(*CEL*)
+
+(*CBL*)
+Theorem im_peirce_em: 
+  peirce -> excluded_middle.
+Proof.
+  unfold peirce.
+  unfold excluded_middle.
+  intros. apply H with (Q := False).
+  unfold not. intros. 
+  right. intros HP. apply H0. 
+  left. apply HP.
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_peirce_ito:
+  peirce -> implies_to_or.
+Proof.
+  unfold peirce.
+  unfold implies_to_or.
+  intros. apply H with (Q := False).
+  unfold not. intros.
+  left. intros. apply H0 in H2. apply H1. 
+  right. apply H2.
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_ito_peirce:
+  implies_to_or -> peirce.
+Proof.
+  unfold implies_to_or.
+  unfold peirce.
+  intros. destruct (H P P).
+  - intros HP. apply HP.
+  - apply H0. intros HP.
+    apply H1 in HP. destruct HP.
+  - apply H1. 
+Qed.
+(*CEL*)
+
+(*CBL*)
+Theorem im_ito_dmnn:
+  implies_to_or -> de_morgan_not_and_not.
+Proof.
+  unfold implies_to_or.
+  unfold de_morgan_not_and_not.
+  intros. destruct (H P P).
+  - intros HP. apply HP.
+  - destruct (H Q Q).
+    + intros HQ. apply HQ.
+    + exfalso. apply H0. split.
+      apply H1. apply H2.
+    + right. apply H2.
+  - left. apply H1.
+Qed.
+(*CEL*)
 
 (* 2020-09-09 20:51 *)
