@@ -16,7 +16,7 @@
   font-weight: bold;
 }
 
-.warning {
+.warn {
   padding: .5rem 1rem;
   background-color: rgba(250, 140, 22, 0.1);
   border: 1px solid #fa8c16;

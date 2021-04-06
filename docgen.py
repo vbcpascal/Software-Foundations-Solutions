@@ -23,6 +23,8 @@ REPLACER = {
     '(*CE*)': '(** #</div></div><div class="doc"># *)',
     '(*CBL*)': '(** #</div><div class="solution-lemma"><div># *)',
     '(*CEL*)': '(** #</div></div><div class="doc"># *)',
+    '(*CBE*)': '(** #</div><div class="warn"><div># *)',
+    '(*CEE*)': '(** #</div></div><div class="doc"># *)',
     '(*CB-CMT*)': '(** #</div><div class="mycomment"><div># *)',
     '(*CE-CMT*)': '(** #</div></div><div class="doc"># *)',
 }
