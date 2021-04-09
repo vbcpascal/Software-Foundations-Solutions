@@ -11,6 +11,7 @@ modules = [
     'Poly',
     'Tactics',
     'Logic',
+    'IndProp',
 ]
 
 COQC = 'coqc'

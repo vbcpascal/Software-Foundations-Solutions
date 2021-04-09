@@ -178,10 +178,17 @@ Print ev_4'''.
 
 Theorem ev_8 : ev 8.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  apply ev_SS.
+  apply ev_SS.
+  apply ev_4.
+Qed.
+  (*CE*)
 
 Definition ev_8' : ev 8
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+  (*CB*)
+  := ev_SS 6 (ev_SS 4 ev_4).
+  (*CE*)
 (** [] *)
 
 (* ################################################################# *)
@@ -396,7 +403,15 @@ Definition and_comm' P Q : P /\ Q <-> Q /\ P :=
     Construct a proof object for the following proposition. *)
 
 Definition conj_fact : forall P Q R, P /\ Q -> Q /\ R -> P /\ R
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+  (*CB*)
+  :=
+  fun (P Q R : Prop) => 
+  fun (HPQ : P /\ Q) => 
+  fun (HQR : Q /\ R) =>
+  match HPQ, HQR with
+  | conj HP _, conj _ HR => conj HP HR
+  end.
+  (*CE*)
 (** [] *)
 
 (* ================================================================= *)
@@ -453,7 +468,15 @@ End Or.
     Construct a proof object for the following proposition. *)
 
 Definition or_commut' : forall P Q, P \/ Q -> Q \/ P
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+  (*CB*)
+  := 
+  fun (P Q : Prop) => 
+  fun (HPQ : P \/ Q) =>
+    match HPQ with
+    | or_introl HP => or_intror HP
+    | or_intror HQ => or_introl HQ
+    end.
+  (*CE*)
 (** [] *)
 
 (* ================================================================= *)
@@ -499,7 +522,9 @@ Definition some_nat_is_even : exists n, ev n :=
     Construct a proof object for the following proposition. *)
 
 Definition ex_ev_Sn : ex (fun n => ev (S n))
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+  (*CB*)
+  := ex_intro (fun n => ev (S n)) 1 (ev_SS 0 ev_0).
+  (*CE*)
 (** [] *)
 
 (* ================================================================= *)
@@ -518,7 +543,9 @@ Inductive True : Prop :=
     Construct a proof object for the following proposition. *)
 
 Definition p_implies_true : forall P, P -> True
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+  (*CB*)
+  := fun (P : Type) (_ : P) => I.
+  (*CE*)
 (** [] *)
 
 (** [False] is equally simple -- indeed, so simple it may look
@@ -553,7 +580,10 @@ Definition false_implies_zero_eq_one : False -> 0 = 1 :=
     Construct a proof object for the following proposition. *)
 
 Definition ex_falso_quodlibet' : forall P, False -> P
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+  (*CB*)
+  := fun (P : Type) (contra : False) => 
+     match contra with end.
+  (*CE*)
 (** [] *)
 
 End Props.
@@ -626,7 +656,11 @@ Definition singleton : forall (X:Type) (x:X), []++[x] == x::[]  :=
 Lemma equality__leibniz_equality : forall (X : Type) (x y: X),
   x == y -> forall P:X->Prop, P x -> P y.
 Proof.
-(* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. destruct H.
+  apply H0.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 3 stars, standard, optional (leibniz_equality__equality) 
@@ -639,7 +673,13 @@ Proof.
 Lemma leibniz_equality__equality : forall (X : Type) (x y: X),
   (forall P:X->Prop, P x -> P y) -> x == y.
 Proof.
-(* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros.
+  apply H.
+  apply (eq_refl x).
+  Show Proof.
+Qed.
+  (*CE*)
 
 (** [] *)
 
