@@ -12,6 +12,7 @@ modules = [
     'Tactics',
     'Logic',
     'IndProp',
+    'ProofObjects',
 ]
 
 COQC = 'coqc'
