@@ -156,7 +156,12 @@ Qed.
 Theorem ev_double : forall n,
   ev (double n).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n. induction n.
+  - simpl. apply ev_0.
+  - simpl. apply ev_SS. apply IHn.
+Qed. 
+  (*CE*)
 (** [] *)
 
 (* ################################################################# *)
@@ -323,7 +328,13 @@ Theorem one_not_even' : ~ ev 1.
 Theorem SSSSev__even : forall n,
   ev (S (S (S (S n)))) -> ev n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. 
+  inversion H. 
+  inversion H1.
+  apply H3.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 1 star, standard (ev5_nonsense) 
@@ -333,7 +344,13 @@ Proof.
 Theorem ev5_nonsense :
   ev 5 -> 2 + 2 = 9.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. simpl. 
+  inversion H. inversion H1. 
+  apply one_not_even in H3.
+  destruct H3.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** The [inversion] tactic does quite a bit of work. For
@@ -492,7 +509,12 @@ Qed.
 (** **** Exercise: 2 stars, standard (ev_sum)  *)
 Theorem ev_sum : forall n m, ev n -> ev m -> ev (n + m).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n m Hn Hm. induction Hn.
+  - simpl. apply Hm.
+  - simpl. apply ev_SS. apply IHHn.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced, optional (ev'_ev) 
@@ -513,7 +535,19 @@ Inductive ev' : nat -> Prop :=
 
 Theorem ev'_ev : forall n, ev' n <-> ev n.
 Proof.
- (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n. split.
+  - intros Hn. induction Hn.
+    + apply ev_0.
+    + apply (ev_SS 0 ev_0).
+    + apply (ev_sum n m IHHn1 IHHn2).
+  - intros Hn. induction Hn.
+    + apply ev'_0.
+    + apply (ev'_sum 2 n). 
+      apply ev'_2. 
+      apply IHHn.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced, especially useful (ev_ev__ev) 
@@ -524,7 +558,13 @@ Proof.
 Theorem ev_ev__ev : forall n m,
   ev (n+m) -> ev n -> ev m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. induction H0.
+  - simpl in H. apply H.
+  - simpl in H. apply ev_minus2 in H.
+    simpl in H. apply IHev. apply H.
+Qed.  
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 3 stars, standard, optional (ev_plus_plus) 
@@ -536,7 +576,19 @@ Proof.
 Theorem ev_plus_plus : forall n m p,
   ev (n+m) -> ev (n+p) -> ev (m+p).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros.
+  assert (H': ev ((n + m) + (n + p))).
+  { apply ev_sum. apply H. apply H0. }
+  apply ev_ev__ev with (n := (n + n)).
+  - rewrite <- plus_assoc.
+    rewrite (plus_swap n m p).
+    rewrite plus_assoc.
+    apply H'.
+  - rewrite <- double_plus.
+    apply ev_double.
+Qed.
+  (*CE*)
 (** [] *)
 
 (* ################################################################# *)
@@ -626,18 +678,23 @@ Inductive next_ev : nat -> nat -> Prop :=
     Define an inductive binary relation [total_relation] that holds
     between every pair of natural numbers. *)
 
-(* FILL IN HERE
+(*CB*)
+Inductive total_relation : nat -> nat -> Prop :=
+  | tn m n : total_relation m n.
+(*CE*)
 
-    [] *)
+(** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (empty_relation) 
 
     Define an inductive binary relation [empty_relation] (on numbers)
     that never holds. *)
 
-(* FILL IN HERE
+(*CB*)
+Inductive empty_relation : nat -> nat -> Prop := .
+(*CE*)
 
-    [] *)
+(** [] *)
 
 (** From the definition of [le], we can sketch the behaviors of
     [destruct], [inversion], and [induction] on a hypothesis [H]
@@ -659,57 +716,134 @@ Inductive next_ev : nat -> nat -> Prop :=
 
 Lemma le_trans : forall m n o, m <= n -> n <= o -> m <= o.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros m n o Hmn Hno.
+  induction Hno.
+  - apply Hmn.
+  - apply le_S. apply IHHno.
+Qed.
+  (*CE*)
 
 Theorem O_le_n : forall n,
   0 <= n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n. induction n.
+  - apply (le_n 0).
+  - apply (le_S 0 n IHn).
+Qed.
+  (*CE*)
 
 Theorem n_le_m__Sn_le_Sm : forall n m,
   n <= m -> S n <= S m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n m Hnm.
+  induction Hnm.
+  - apply (le_n (S n)).
+  - apply (le_S (S n) (S m) IHHnm).
+Qed.
+  (*CE*)
 
 Theorem Sn_le_Sm__n_le_m : forall n m,
   S n <= S m -> n <= m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n m Hnm. inversion Hnm.
+  - apply le_n.
+  - apply le_trans with (n := S n).
+    + apply le_S. apply le_n.
+    + apply H0.
+Qed.
+  (*CE*)
 
 Theorem le_plus_l : forall a b,
   a <= a + b.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. induction b.
+  - rewrite <- plus_n_O. apply le_n.
+  - rewrite <- plus_n_Sm.
+    apply le_S. apply IHb.
+Qed.
+  (*CE*)
 
 Theorem plus_le : forall n1 n2 m,
   n1 + n2 <= m ->
   n1 <= m /\ n2 <= m.
 Proof.
- (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. induction H.
+  - split. apply le_plus_l.
+    rewrite plus_comm. apply le_plus_l.
+  - destruct IHle. split.
+    + apply le_S. apply H0.
+    + apply le_S. apply H1.
+Qed.
+  (*CE*)
 
 (** Hint: the next one may be easiest to prove by induction on [n]. *)
 
 Theorem add_le_cases : forall n m p q,
     n + m <= p + q -> n <= p \/ m <= q.
 Proof.
-(* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n. induction n.
+  - left. apply O_le_n.
+  - intros m p. destruct p.
+    generalize dependent m.
+    + intros. right.
+      apply plus_le in H as [_ H].
+      simpl in H. apply H.
+    + simpl. intros. 
+      assert (H': n <= p \/ m <= q -> S n <= S p \/ m <= q).
+      { intros [ H0 | H0 ]. 
+        - left. apply n_le_m__Sn_le_Sm. apply H0.
+        - right. apply H0. }
+      apply Sn_le_Sm__n_le_m in H.
+      apply H'. apply IHn. apply H.
+Qed.
+  (*CE*)
 
 Theorem lt_S : forall n m,
   n < m ->
   n < S m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  unfold lt. intros.
+  apply le_S. apply H.
+Qed.
+  (*CE*)
 
 Theorem plus_lt : forall n1 n2 m,
   n1 + n2 < m ->
   n1 < m /\ n2 < m.
 Proof.
-(* FILL IN HERE *) Admitted.
+  (*CB*)
+  unfold lt. intros. split.
+  - apply proj1 with (Q := n2 <= m).
+    apply plus_le.
+    simpl. apply H.
+  - apply proj2 with (P := n1 <= m).
+    apply plus_le. rewrite <- plus_n_Sm.
+    apply H.
+Qed.
+  (*CE*)  
 
 Theorem leb_complete : forall n m,
   n <=? m = true -> n <= m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros n. induction n.
+  - intros. apply O_le_n.
+  - induction m.
+    + simpl. intros. 
+      discriminate H.
+    + simpl. intros.
+      apply n_le_m__Sn_le_Sm.
+      apply IHn. apply H.
+Qed.
+  (*CE*)
 
 (** Hint: The next one may be easiest to prove by induction on [m]. *)
 
@@ -717,21 +851,40 @@ Theorem leb_correct : forall n m,
   n <= m ->
   n <=? m = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. generalize dependent n. induction m.
+  - intros. inversion H. reflexivity.
+  - intros. induction n.
+    + simpl. reflexivity.
+    + simpl. apply IHm.
+      apply Sn_le_Sm__n_le_m in H.
+      apply H.
+Qed.
+  (*CE*)
 
 (** Hint: The next one can easily be proved without using [induction]. *)
 
 Theorem leb_true_trans : forall n m o,
   n <=? m = true -> m <=? o = true -> n <=? o = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. apply leb_correct. apply le_trans with (n := m).
+  - apply leb_complete. apply H.
+  - apply leb_complete. apply H0.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (leb_iff)  *)
 Theorem leb_iff : forall n m,
   n <=? m = true <-> n <= m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  split. 
+  apply leb_complete.
+  apply leb_correct.
+Qed.
+  (*CE*)
 (** [] *)
 
 Module R.
@@ -761,7 +914,11 @@ Inductive R : nat -> nat -> nat -> Prop :=
       would the set of provable propositions change?  Briefly (1
       sentence) explain your answer. *)
 
-(* FILL IN HERE *)
+(*CB-TXT*)
+(** [R 1 1 2] can be constructed by [c3 1 0 1 (c2 0 0 0 c1)]; and
+    [R 2 2 6] cannot be constructed. The set won't change no matter
+    which of [c4] or [c5] is dropped. *)
+(*CE-TXT*)
 
 (* Do not modify the following line: *)
 Definition manual_grade_for_R_provability : option (nat*string) := None.
@@ -774,11 +931,42 @@ Definition manual_grade_for_R_provability : option (nat*string) := None.
     in Coq? *)
 
 Definition fR : nat -> nat -> nat
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+(*CB*)
+  := fun (m n : nat) => m + n.
+(*CE*)
+
+(*CBL*)
+Lemma R_0_n_n : forall n, R 0 n n.
+Proof.
+  intros n. induction n.
+  - apply c1.
+  - apply c3. apply IHn.
+Qed.
+(*CEL*)
 
 Theorem R_equiv_fR : forall m n o, R m n o <-> fR m n = o.
 Proof.
-(* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. split.
+  - intros. unfold fR. 
+    induction H; try reflexivity.
+    + simpl. f_equal. apply IHR.
+    + rewrite <- plus_n_Sm.
+      f_equal. apply IHR.
+    + simpl in IHR. 
+      rewrite <- plus_n_Sm in IHR.
+      inversion IHR. reflexivity.
+    + rewrite plus_comm. apply IHR.
+  - generalize dependent n.
+    generalize dependent o.
+    induction m; simpl.
+    + intros. rewrite H. apply R_0_n_n.
+    + destruct o.
+      * intros. discriminate H.
+      * intros. apply c2. injection H.
+        intros. apply IHm in H0. apply H0.
+Qed.
+  (*CE*)
 (** [] *)
 
 End R.
