@@ -13,6 +13,7 @@ modules = [
     'Logic',
     'IndProp',
     'ProofObjects',
+    'IndPrinciples',
 ]
 
 COQC = 'coqc'
