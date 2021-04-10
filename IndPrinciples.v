@@ -72,7 +72,12 @@ Proof.
 Theorem plus_one_r' : forall n:nat,
   n + 1 = S n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  apply nat_ind.
+  - reflexivity.
+  - intros. simpl. f_equal. apply H.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** Coq generates induction principles for every datatype
@@ -120,6 +125,15 @@ Inductive rgb : Type :=
   | green
   | blue.
 Check rgb_ind.
+
+(*CB-TXT*)
+(** rgb_ind : 
+      forall P : rgb -> Prop,
+      P red -> P green -> P blue ->
+      forall r : rgb, P r 
+*)
+(*CE-TXT*)
+
 (** [] *)
 
 (** Here's another example, this time with one of the constructors
@@ -181,8 +195,17 @@ Inductive booltree : Type :=
  | bt_leaf (b : bool)
  | bt_branch (b : bool) (t1 t2 : booltree).
 
-(* FILL IN HERE:
-   ... *)
+(*CB-TXT*)
+(** booltree_ind : 
+      forall P : booltree -> Prop,
+        P bt_empty ->
+        (forall (b : bool), P (bt_leaf b)) ->
+        (forall (b : bool) (t1 : booltree), P t1 -> 
+           forall (t2 : booltree), P t2 ->
+             P (bt_branch b t1 t2)) ->
+        forall b : booltree, P b
+*)
+(*CE-TXT*)
 
 (* Do not modify the following line: *)
 Definition manual_grade_for_booltree_ind : option (nat*string) := None.
@@ -201,8 +224,12 @@ Definition manual_grade_for_booltree_ind : option (nat*string) := None.
     principle Coq generates is that given above: *)
 
 Inductive Toy : Type :=
-  (* FILL IN HERE *)
-.
+  (*CB*)
+  | con1 (b : bool)
+  | con2 (n : nat) (t : Toy)
+  (*CE*)
+  .
+
 (* Do not modify the following line: *)
 Definition manual_grade_for_toy_ind : option (nat*string) := None.
 (** [] *)
@@ -248,6 +275,18 @@ Inductive tree (X:Type) : Type :=
   | leaf (x : X)
   | node (t1 t2 : tree X).
 Check tree_ind.
+
+(*CB-TXT*)
+(** tree_ind : 
+      forall (X : Type) (P : tree X -> Prop),
+        (forall (x : X), P (leaf X x)) ->
+        (forall (t1 : tree X), P t1 -> 
+           forall (t2 : tree X), P t2 ->
+             P (node X t1 t2)) ->
+      forall t : tree X, P t
+*)
+(*CE-TXT*)
+
 (** [] *)
 
 (** **** Exercise: 1 star, standard, optional (mytype) 
@@ -263,6 +302,16 @@ Check tree_ind.
                forall n : nat, P (constr3 X m n)) ->
             forall m : mytype X, P m
 *) 
+
+(*CB*)
+Inductive mytype (X : Type) :=
+| constr1 (x : X)
+| constr2 (n : nat)
+| constr3 (m : mytype X) (n : nat)
+.
+Check mytype_ind.
+(*CE*)
+
 (** [] *)
 
 (** **** Exercise: 1 star, standard, optional (foo) 
@@ -278,6 +327,14 @@ Check tree_ind.
                (forall n : nat, P (f1 n)) -> P (quux X Y f1)) ->
              forall f2 : foo X Y, P f2
 *) 
+(*CB*)
+Inductive foo (X Y : Type) :=
+| bar (x : X)
+| baz (y : Y)
+| quux (f1 : nat -> foo X Y)
+.
+Check foo_ind.
+(*CE*)
 (** [] *)
 
 (** **** Exercise: 1 star, standard, optional (foo') 
@@ -287,6 +344,7 @@ Check tree_ind.
 Inductive foo' (X:Type) : Type :=
   | C1 (l : list X) (f : foo' X)
   | C2.
+Check foo'_ind.
 
 (** What induction principle will Coq generate for [foo']?  Fill
    in the blanks, then check your answer with Coq.)
@@ -299,6 +357,17 @@ Inductive foo' (X:Type) : Type :=
              ___________________________________________ ->
              forall f : foo' X, ________________________
 *)
+
+(*CB-TXT*)
+(** foo'_ind : 
+      forall (X : Type) (P : foo' X -> Prop),
+        (forall (l : list X) (f : foo' X),
+           P f ->
+           P (C1 X l f)) ->
+        P (C2 X) ->
+        forall f : foo' X, P f
+*)
+(*CE-TXT*)
 
 (** [] *)
 
@@ -436,9 +505,37 @@ Proof.
     induction, and state the theorem and proof in terms of this
     defined proposition.  *)
 
-(* FILL IN HERE
+(*CB*)
+Definition P_pa_ : nat -> Prop :=
+  fun n => forall m p, n + (m + p) = (n + m) + p.
 
-    [] *)
+Theorem plus_assoc_ : forall n: nat,
+  P_pa_ n.
+Proof.
+  apply nat_ind.
+  - unfold P_pa_. simpl. reflexivity.
+  - unfold P_pa_. intros.
+    simpl. f_equal. apply H.
+Qed.
+(*CE*)
+
+(*CB*)
+Definition P_pc_ : nat -> Prop :=
+  fun n => forall m, n + m = m + n.
+
+Theorem plus_comm_: forall n: nat,
+  P_pc_ n.
+Proof.
+  apply nat_ind.
+  - unfold P_pc_. intros. 
+    rewrite <- plus_n_O. reflexivity.
+  - unfold P_pc_. intros.
+    simpl. rewrite <- plus_n_Sm.
+    f_equal. apply H.
+Qed.
+(*CE*)
+
+(** [] *)
 
 (* ################################################################# *)
 (** * Induction Principles for Propositions *)
