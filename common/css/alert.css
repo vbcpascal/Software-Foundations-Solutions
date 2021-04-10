@@ -16,6 +16,14 @@
   font-weight: bold;
 }
 
+.solution-text {
+  padding: 1rem;
+  background-color: rgba(128, 128, 128, 0.1);
+  border: 1px solid #777;
+  border-radius: .4rem;
+  font-size: smaller;
+}
+
 .warn {
   padding: .5rem 1rem;
   background-color: rgba(250, 140, 22, 0.1);
