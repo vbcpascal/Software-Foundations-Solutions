@@ -1009,25 +1009,73 @@ End R.
       Hint: choose your induction carefully! *)
 
 Inductive subseq : list nat -> list nat -> Prop :=
-(* FILL IN HERE *)
+(*CB*)
+  | sub_nil ys : subseq [] ys
+  | sub_drop a xs ys (H : subseq xs ys) : subseq xs (a :: ys)
+  | sub_take a xs ys (H : subseq xs ys) : subseq (a :: xs) (a :: ys)
+(*CE*)
 .
 
 Theorem subseq_refl : forall (l : list nat), subseq l l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  induction l.
+  - apply sub_nil.
+  - apply sub_take. apply IHl.
+Qed.
+  (*CE*)
 
 Theorem subseq_app : forall (l1 l2 l3 : list nat),
   subseq l1 l2 ->
   subseq l1 (l2 ++ l3).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. induction H.
+  - apply sub_nil. 
+  - simpl. apply sub_drop.
+    apply IHsubseq.
+  - simpl. apply sub_take.
+    apply IHsubseq.
+Qed.
+  (*CE*)
+
+(* Not right!
+Fixpoint subseq_trans' (l1 l2 l3 : list nat) :
+  subseq l1 l2 ->
+  subseq l2 l3 ->
+  subseq l1 l3 :=
+  fun H12 => fun H23 =>
+  match H12, H23 with
+  | sub_nil _, _ => sub_nil l3
+  | sub_take x l1' l2' p12, sub_take _ _ l3' p23 =>
+    sub_take x l1' l3' (subseq_trans' l1' l2' l3' p12 p23)
+  | sub_drop x _ l2' p12, sub_take _ _ l3' p23 =>
+    sub_drop x l1 l3' (subseq_trans' l1 l2' l3' p12 p23)
+  | p12, sub_drop y _ l3' p23 =>
+    sub_drop y l1 l3' (subseq_trans' l1 l2 l3' p12 p23)
+  | sub_drop x l1' _ p12, sub_nil _ => (
+  end. *)
 
 Theorem subseq_trans : forall (l1 l2 l3 : list nat),
   subseq l1 l2 ->
   subseq l2 l3 ->
   subseq l1 l3.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros l1 l2 l3 H12 H23.
+  generalize dependent l1.
+  induction H23 as [| x l2 l3 | x l2 l3].
+  - intros. apply subseq_app with (l2 := []).
+    apply H12.
+  - intros. apply sub_drop.
+    apply IHsubseq. apply H12.
+  - intros. inversion H12.
+    + apply sub_nil.
+    + apply sub_drop. apply IHsubseq. apply H1.
+    + apply sub_take. apply IHsubseq. apply H1.
+  Show Proof.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (R_provability2) 
