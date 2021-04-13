@@ -1312,11 +1312,17 @@ Inductive baz : Type :=
 (** How _many_ elements does the type [baz] have? (Explain in words,
     in a comment.) *)
 
-(*CB-TXT*) 
+(*CB*) 
 
-(** 0 *) 
+Theorem not_exist_baz : baz -> False.
+Proof.
+  intros x.
+  induction x.
+  - apply IHx.
+  - apply IHx.
+Qed.
 
-(*CE-TXT*)
+(*CE*)
 
 (* Do not modify the following line: *)
 Definition manual_grade_for_baz_num_elts : option (nat*string) := None.
