@@ -1073,7 +1073,6 @@ Proof.
     + apply sub_nil.
     + apply sub_drop. apply IHsubseq. apply H1.
     + apply sub_take. apply IHsubseq. apply H1.
-  Show Proof.
 Qed.
   (*CE*)
 (** [] *)
@@ -1093,9 +1092,11 @@ Qed.
     - [R 1 [1;2;1;0]]
     - [R 6 [3;2;1;0]]  *)
 
-(* FILL IN HERE
+(*CB-TXT*)
+(** The last one cannot be proved. *)
+(*CE-TXT*)
 
-    [] *)
+(** [] *)
 
 (* ################################################################# *)
 (** * Case Study: Regular Expressions *)
@@ -1319,13 +1320,21 @@ Qed.
 Lemma empty_is_empty : forall T (s : list T),
   ~ (s =~ EmptySet).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  unfold not. intros. inversion H.
+Qed.
+  (*CE*)
 
 Lemma MUnion' : forall T (s : list T) (re1 re2 : reg_exp T),
   s =~ re1 \/ s =~ re2 ->
   s =~ Union re1 re2.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros T s re1 re2 [H|H].
+  - apply MUnionL. apply H.
+  - apply MUnionR. apply H.
+Qed.
+  (*CE*)
 
 (** The next lemma is stated in terms of the [fold] function from the
     [Poly] chapter: If [ss : list (list T)] represents a sequence of
@@ -1336,7 +1345,15 @@ Lemma MStar' : forall T (ss : list (list T)) (re : reg_exp T),
   (forall s, In s ss -> s =~ re) ->
   fold app ss [] =~ Star re.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. induction ss.
+  - simpl. apply MStar0.
+  - simpl. apply MStarApp.
+    + apply H. simpl. left. reflexivity.
+    + apply IHss. intros.
+      apply H. simpl. right. apply H0.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 4 stars, standard, optional (reg_exp_of_list_spec) 
@@ -1344,10 +1361,43 @@ Proof.
     Prove that [reg_exp_of_list] satisfies the following
     specification: *)
 
+(*CB*)
+Lemma reg_exp_of_list_refl : forall T (s : list T),
+  s =~ reg_exp_of_list s.
+Proof.
+  intros. induction s.
+  - simpl. apply MEmpty.
+  - simpl. apply (MApp [x]).
+    + apply MChar.
+    + apply IHs.
+Qed.
+(*CE*)
+
 Lemma reg_exp_of_list_spec : forall T (s1 s2 : list T),
   s1 =~ reg_exp_of_list s2 <-> s1 = s2.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. split.
+  { (* -> *)
+    intros H. generalize dependent s2.
+    induction s1.
+    - intros. destruct s2; try reflexivity.
+      simpl in H. inversion H. inversion H3.
+      rewrite <- H5 in H1. inversion H1.
+    - intros. destruct s2.
+      + simpl in H. inversion H.
+      + simpl in H. inversion H. inversion H3.
+        rewrite <- H5 in H1. 
+        simpl in H1. inversion H1. simpl.
+        rewrite -> H9 in H4. apply IHs1 in H4.
+        rewrite -> H4. reflexivity.
+  }
+  { (* <- *) 
+    intros H. rewrite H.
+    apply reg_exp_of_list_refl.
+  } 
+Qed.
+  (*CE*)
 (** [] *)
 
 (** Since the definition of [exp_match] has a recursive
@@ -1437,12 +1487,62 @@ Qed.
     is correct. *)
 
 Fixpoint re_not_empty {T : Type} (re : reg_exp T) : bool
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+  (*CB*)
+  := match re with
+  | EmptySet => false
+  | EmptyStr => true
+  | Char x => true
+  | App re1 re2 => re_not_empty re1 && re_not_empty re2
+  | Union re1 re2 => re_not_empty re1 || re_not_empty re2
+  | Star re => true
+  end.
+  (*CE*)
 
 Lemma re_not_empty_correct : forall T (re : reg_exp T),
   (exists s, s =~ re) <-> re_not_empty re = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. split.
+  { (* -> *)
+    intros [s H]. induction H ; try reflexivity.
+    - (* App *) simpl.
+      rewrite IHexp_match1.
+      rewrite IHexp_match2.
+      reflexivity.
+    - (* UnionL *) simpl. 
+      rewrite IHexp_match.
+      reflexivity.
+    - (* UnionR *) simpl.
+      rewrite IHexp_match.
+      destruct (re_not_empty re1); reflexivity.
+  }
+  { (* <- *)
+    intros. induction re.
+    - (* EmptySet *)
+      discriminate H.
+    - (* EmptyStr *)
+      exists []. apply MEmpty.
+    - (* Char *)
+      exists [t]. apply MChar.
+    - (* App *)
+      simpl in H. apply andb_true_iff in H.
+      destruct H as [H1 H2].
+      apply IHre1 in H1. destruct H1 as [s1 H1].
+      apply IHre2 in H2. destruct H2 as [s2 H2].
+      exists (s1 ++ s2).
+      apply MApp. apply H1. apply H2.
+    - (* Union *)
+      simpl in H. apply orb_true_iff in H.
+      destruct H as [H | H].
+      + apply IHre1 in H. destruct H as [s' H].
+        exists s'. apply MUnionL. apply H.
+      + apply IHre2 in H. destruct H as [s' H].
+        exists s'. apply MUnionR. apply H.
+    - (* Star *)
+      exists []. apply MStar0.
+  }
+Qed.
+  (*CE*)
 (** [] *)
 
 (* ================================================================= *)
