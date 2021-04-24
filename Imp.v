@@ -2140,13 +2140,43 @@ Reserved Notation "st '=[' c ']=>' st' '/' s"
 (** Based on the above description, complete the definition of the
     [ceval] relation. *)
 
-(* FILL IN HERE *)
-
 Inductive ceval : com -> state -> result -> state -> Prop :=
   | E_Skip : forall st,
       st =[ CSkip ]=> st / SContinue
-  (* FILL IN HERE *)
-
+  (*CB*)
+  | E_Break : forall st,
+    st  =[ break ]=> st / SBreak
+  | E_Ass : forall st x a n,
+    aeval st a = n ->
+    st  =[ x := a ]=> (x !-> n ; st) / SContinue  
+  | E_SeqBreak : forall c1 c2 st st',
+    st  =[ c1     ]=> st' / SBreak ->
+    st  =[ c1; c2 ]=> st' / SBreak
+  | E_SeqContinue : forall c1 c2 st st' st'' res,
+    st  =[ c1     ]=> st'  / SContinue ->
+    st' =[ c2     ]=> st'' / res       ->
+    st  =[ c1; c2 ]=> st'' / res
+  | E_IfTrue : forall b c1 c2 st st' res,
+    beval st b = true ->
+    st =[ c1 ]=> st' / res ->
+    st =[ if b then c1 else c2 end ]=> st' / res
+  | E_IfFalse : forall b c1 c2 st st' res,
+    beval st b = false ->
+    st =[ c2 ]=> st' / res ->
+    st =[ if b then c1 else c2 end ]=> st' / res
+  | E_WhileFalse : forall b c st,
+    beval st b = false ->
+    st =[ while b do c end ]=> st / SContinue
+  | E_WhileTrueContinue : forall b c st st' st'',
+    beval st b = true ->
+    st  =[ c ]=> st' / SContinue ->
+    st' =[ while b do c end ]=> st'' / SContinue ->
+    st  =[ while b do c end ]=> st'' / SContinue
+  | E_WhileTrueBreak : forall b c st st',
+    beval st b = true ->
+    st  =[ c ]=> st' / SBreak ->
+    st  =[ while b do c end ]=> st' / SContinue
+  (*CE*)
   where "st '=[' c ']=>' st' '/' s" := (ceval c st s st').
 
 (** Now prove the following properties of your definition of [ceval]: *)
@@ -2155,20 +2185,31 @@ Theorem break_ignore : forall c st st' s,
      st =[ break; c ]=> st' / s ->
      st = st'.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. inversion H; subst.
+  - inversion H5. auto.
+  - inversion H2.
+Qed.
+  (*CE*)
 
 Theorem while_continue : forall b c st st' s,
   st =[ while b do c end ]=> st' / s ->
   s = SContinue.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. inversion H; subst; reflexivity.
+Qed.
+  (*CE*)
 
 Theorem while_stops_on_break : forall b c st st',
   beval st b = true ->
   st =[ c ]=> st' / SBreak ->
   st =[ while b do c end ]=> st' / SContinue.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. apply E_WhileTrueBreak; auto.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 3 stars, advanced, optional (while_break_true)  *)
@@ -2177,7 +2218,14 @@ Theorem while_break_true : forall b c st st',
   beval st' b = true ->
   exists st'', st'' =[ c ]=> st' / SBreak.
 Proof.
-(* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. remember (<{ while b do c end }>) as w. 
+  induction H; try inversion Heqw; subst.
+  - rewrite H in H0. discriminate.
+  - apply IHceval2; auto.
+  - exists st. apply H1.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced, optional (ceval_deterministic)  *)
@@ -2186,7 +2234,47 @@ Theorem ceval_deterministic: forall (c:com) st st1 st2 s1 s2,
      st =[ c ]=> st2 / s2 ->
      st1 = st2 /\ s1 = s2.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. 
+  generalize dependent st2.
+  generalize dependent s2.
+  induction H; subst.
+  1,2,3: intros; inversion H0; subst; split; auto.
+  - intros. inversion H0; subst.
+    + apply IHceval. apply H6.
+    + apply IHceval in H3. inversion H3.
+      discriminate.
+  - intros. inversion H1; subst.
+    + apply IHceval1 in H7. inversion H7.
+      discriminate.
+    + apply IHceval1 in H4. inversion H4.
+      rewrite <- H2 in H8.
+      apply IHceval2 in H8. apply H8.
+  - intros. inversion H1; subst.
+    + apply IHceval in H9. apply H9.
+    + rewrite H8 in H. discriminate.
+  - intros. inversion H1; subst.
+    + rewrite H8 in H. discriminate.
+    + apply IHceval in H9. apply H9.
+  - intros. inversion H0; subst.
+    + split; reflexivity.
+    + rewrite H in H3; discriminate.
+    + rewrite H in H3; discriminate.
+  - intros. inversion H2; subst.
+    + rewrite H in H8; discriminate.
+    + apply IHceval1 in H6. destruct H6.
+      rewrite <- H3 in H10.
+      apply IHceval2 in H10. apply H10.
+    + apply IHceval1 in H9. 
+      destruct H9. discriminate.
+  - intros. inversion H1; subst.
+    + rewrite H in H7. discriminate.
+    + apply IHceval in H5. 
+      destruct H5. discriminate.
+    + apply IHceval in H8. destruct H8.
+      split; auto.
+Qed.
+  (*CE*)
 
 (** [] *)
 End BreakImp.
@@ -2206,8 +2294,113 @@ End BreakImp.
     about making up a concrete Notation for [for] loops, but feel free
     to play with this too if you like.) *)
 
-(* FILL IN HERE
+(*CB*)
+Module ForIMP.
 
-    [] *)
+Inductive com : Type :=
+  | CSkip
+  | CAss (x : string) (a : aexp)
+  | CSeq (c1 c2 : com)
+  | CIf (b : bexp) (c1 c2 : com)
+  | CWhile (b : bexp) (c : com)
+  | CFor (b: bexp) (c1 c2 c : com).
+(*CE*)
+
+(*CB*)
+Notation "'skip'"  :=
+         CSkip (in custom com at level 0) : com_scope.
+Notation "x := y"  :=
+         (CAss x y)
+            (in custom com at level 0, x constr at level 0,
+             y at level 85, no associativity) : com_scope.
+Notation "x ; y" :=
+         (CSeq x y)
+           (in custom com at level 90, right associativity) : com_scope.
+Notation "'if' x 'then' y 'else' z 'end'" :=
+         (CIf x y z)
+           (in custom com at level 89, x at level 99,
+            y at level 99, z at level 99) : com_scope.
+Notation "'while' x 'do' y 'end'" :=
+         (CWhile x y)
+            (in custom com at level 89, x at level 99, y at level 99) : com_scope.
+Notation "'for' x ',' y ',' z 'do' w 'end'" :=
+         (CFor y x z w)
+            (in custom com at level 89, x at level 99, 
+             y at level 99, z at level 99) : com_scope.
+(*CE*)
+
+(*CB*)
+Reserved Notation
+         "st '=[' c ']=>' st'"
+         (at level 40, c custom com at level 99,
+          st constr, st' constr at next level).
+
+Inductive ceval : com -> state -> state -> Prop :=
+  | E_Skip : forall st,
+      st =[ skip ]=> st
+  | E_Ass  : forall st a n x,
+      aeval st a = n ->
+      st =[ x := a ]=> (x !-> n ; st)
+  | E_Seq : forall c1 c2 st st' st'',
+      st  =[ c1 ]=> st'  ->
+      st' =[ c2 ]=> st'' ->
+      st  =[ c1 ; c2 ]=> st''
+  | E_IfTrue : forall st st' b c1 c2,
+      beval st b = true ->
+      st =[ c1 ]=> st' ->
+      st =[ if b then c1 else c2 end]=> st'
+  | E_IfFalse : forall st st' b c1 c2,
+      beval st b = false ->
+      st =[ c2 ]=> st' ->
+      st =[ if b then c1 else c2 end]=> st'
+  | E_WhileFalse : forall b st c,
+      beval st b = false ->
+      st =[ while b do c end ]=> st
+  | E_WhileTrue : forall st st' st'' b c,
+      beval st b = true ->
+      st  =[ c ]=> st' ->
+      st' =[ while b do c end ]=> st'' ->
+      st  =[ while b do c end ]=> st''
+  | E_For : forall st st' st'' b c1 c2 c,  
+      st  =[ c1 ]=> st' ->
+      st' =[ while b do c; c2 end ]=> st'' ->
+      st  =[ for c1, b, c2 do c end ]=> st''
+  where "st =[ c ]=> st'" := (ceval c st st').
+(*CE*)
+
+(*CBL*)
+Ltac Ass := (apply E_Ass; reflexivity).
+
+Example ceval_for_example1:
+  empty_st =[
+    X := 0 ;
+    for Y := 0, Y <= 2, Y := Y + 1 do
+      X := X + Y
+    end
+  ]=> ( 
+    Y !-> 3 ; X !-> 3;
+    Y !-> 2 ; X !-> 1;
+    Y !-> 1 ; X !-> 0;
+    Y !-> 0 ; X !-> 0
+  ).
+Proof.
+  (* We must supply the intermediate state *)
+  apply E_Seq with (X !-> 0); try Ass.
+  apply E_For with (Y !-> 0; X !-> 0); try Ass.
+  apply E_WhileTrue with (Y !-> 1; X !-> 0; Y !-> 0; X !-> 0).
+  { reflexivity. }
+  { apply E_Seq with (X !-> 0; Y !-> 0; X !-> 0); try Ass. }
+  apply E_WhileTrue with (Y !-> 2; X !-> 1; Y !-> 1; 
+                          X !-> 0; Y !-> 0; X !-> 0).
+  { reflexivity. }
+  { apply E_Seq with (X !-> 1; Y !-> 1; X !-> 0; Y !-> 0; X !-> 0); try Ass. }
+  apply E_WhileTrue with (Y !-> 3; X !-> 3; Y !-> 2; X !-> 1; 
+                          Y !-> 1; X !-> 0; Y !-> 0; X !-> 0).
+  { reflexivity. }
+  { apply E_Seq with (X !-> 3; Y !-> 2; X !-> 1; Y !-> 1; 
+                      X !-> 0; Y !-> 0; X !-> 0); try Ass. }
+  apply E_WhileFalse. reflexivity.
+Qed.
+(*CEL*)
 
 (* 2020-09-09 20:51 *)
