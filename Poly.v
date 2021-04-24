@@ -963,7 +963,7 @@ Proof. reflexivity. Qed.
 
 (*CB-TXT*)
 (** A function to check whether each element of a nature number list 
-is not O, where f has type nat->bool->bool. *)
+is not O, where [f] has type [nat->bool->bool]. *)
 (*CE-TXT*)
 
 (* Do not modify the following line: *)
