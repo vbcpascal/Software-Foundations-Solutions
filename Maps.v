@@ -225,7 +225,10 @@ Proof. reflexivity. Qed.
 Lemma t_apply_empty : forall (A : Type) (x : string) (v : A),
     (_ !-> v) x = v.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*) 
+  reflexivity.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (t_update_eq) 
@@ -237,7 +240,12 @@ Proof.
 Lemma t_update_eq : forall (A : Type) (m : total_map A) x v,
     (x !-> v ; m) x = v.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. unfold t_update.
+  rewrite <- eqb_string_refl.
+  reflexivity.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (t_update_neq) 
@@ -250,7 +258,12 @@ Theorem t_update_neq : forall (A : Type) (m : total_map A) x1 x2 v,
     x1 <> x2 ->
     (x1 !-> v ; m) x2 = m x2.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. unfold t_update.
+  apply (false_eqb_string x1 x2) in H.
+  rewrite H. reflexivity.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 2 stars, standard, optional (t_update_shadow) 
@@ -261,10 +274,25 @@ Proof.
     to any key) as the simpler map obtained by performing just
     the second [update] on [m]: *)
 
+(*CBL*)
+Lemma double_if_with_same_cond : forall (T : Type) (m : bool) (v1 v2 v3 : T), 
+  (if m then v1 else (if m then v2 else v3)) = (if m then v1 else v3).
+Proof.
+  intros. destruct m; try reflexivity.
+Qed.
+(*CEL*)
+
 Lemma t_update_shadow : forall (A : Type) (m : total_map A) x v1 v2,
     (x !-> v2 ; x !-> v1 ; m) = (x !-> v2 ; m).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. unfold t_update.
+  apply functional_extensionality.
+  intros x'. 
+  destruct (eqb_string x x'); reflexivity.
+Qed.
+  (*CE*)
+
 (** [] *)
 
 (** For the final two lemmas about total maps, it's convenient to use
@@ -280,7 +308,13 @@ Proof.
 Lemma eqb_stringP : forall x y : string,
     reflect (x = y) (eqb_string x y).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  Search reflect.
+  intros. apply iff_reflect.
+  rewrite eqb_string_true_iff.
+  reflexivity.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** Now, given [string]s [x1] and [x2], we can use the tactic
@@ -299,7 +333,14 @@ Proof.
 Theorem t_update_same : forall (A : Type) (m : total_map A) x,
     (x !-> m x ; m) = m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. unfold t_update.
+  apply functional_extensionality.
+  intros. destruct (eqb_string x x0) eqn:E; try reflexivity.
+  apply eqb_string_true_iff in E.
+  rewrite E. reflexivity.
+Qed.
+  (*CE*)
 (** [] *)
 
 (** **** Exercise: 3 stars, standard, especially useful (t_update_permute) 
@@ -315,7 +356,17 @@ Theorem t_update_permute : forall (A : Type) (m : total_map A)
     =
     (x2 !-> v2 ; x1 !-> v1 ; m).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  (*CB*)
+  intros. unfold t_update.
+  apply functional_extensionality.
+  intros.
+  destruct (eqb_string x1 x) eqn:E1.
+  - apply eqb_string_false_iff in H.
+    apply eqb_string_true_iff in E1.
+    rewrite E1 in H. rewrite H. reflexivity.
+  - reflexivity.
+Qed.
+  (*CE*)
 (** [] *)
 
 (* ################################################################# *)
