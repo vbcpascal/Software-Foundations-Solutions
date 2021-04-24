@@ -2294,6 +2294,7 @@ End BreakImp.
     about making up a concrete Notation for [for] loops, but feel free
     to play with this too if you like.) *)
 
+
 (*CB*)
 Module ForIMP.
 
@@ -2401,6 +2402,8 @@ Proof.
                       X !-> 0; Y !-> 0; X !-> 0); try Ass. }
   apply E_WhileFalse. reflexivity.
 Qed.
+
+End ForIMP.
 (*CEL*)
 
 (* 2020-09-09 20:51 *)
