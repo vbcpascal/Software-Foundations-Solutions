@@ -14,6 +14,7 @@ modules = [
     'IndProp',
     'ProofObjects',
     'IndPrinciples',
+    'Maps',
 ]
 
 COQC = 'coqc'
@@ -70,7 +71,7 @@ def gen_doc(module_name: str):
     header = " --with-header " + HEADER
     footer = " --with-footer " + FOOTER
     title = " -t " + module_name
-    flags = " --html --no-glob --no-index --no-lib-name --lib-subtitles "
+    flags = " --html --no-glob --no-index --no-lib-name --lib-subtitles --interpolate "
     output = " -o " + doc_file
     cmd = COQDOC + header + footer + title + flags + output + " " + codefile
     os.system(cmd)
