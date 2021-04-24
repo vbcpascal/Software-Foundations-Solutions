@@ -15,6 +15,7 @@ modules = [
     'ProofObjects',
     'IndPrinciples',
     'Maps',
+    'Imp',
 ]
 
 COQC = 'coqc'
